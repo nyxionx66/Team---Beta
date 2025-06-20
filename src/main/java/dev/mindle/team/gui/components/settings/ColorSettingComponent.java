@@ -3,68 +3,11 @@ package dev.mindle.team.gui.components.settings;
 import dev.mindle.team.gui.theme.ThemeManager;
 import dev.mindle.team.gui.utils.AnimationUtils;
 import dev.mindle.team.gui.utils.RenderUtils;
-import dev.mindle.team.module.setting.Setting;
+import dev.mindle.team.module.setting.ColorSetting;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.util.math.MathHelper;
 
 import java.awt.Color;
-
-// Custom setting class for colors
-public class ColorSetting extends Setting<Integer> {
-    public ColorSetting(String module, String name, String description, Integer defaultValue) {
-        super(module, name, description, defaultValue);
-    }
-
-    @Override
-    public void setValue(Integer value) {
-        if (value != null) {
-            this.value = value;
-            save();
-        }
-    }
-
-    @Override
-    public Integer getValue() {
-        return value != null ? value : defaultValue;
-    }
-
-    @Override
-    public String getValueAsString() {
-        return String.valueOf(getValue());
-    }
-
-    @Override
-    public void setValueFromString(String value) {
-        if (value != null) {
-            try {
-                setValue(Integer.parseInt(value));
-            } catch (NumberFormatException e) {
-                resetToDefault();
-            }
-        }
-    }
-
-    @Override
-    public Setting<Integer> copy() {
-        ColorSetting copy = new ColorSetting(module, name, description, defaultValue);
-        copy.value = this.value;
-        return copy;
-    }
-
-    public String getHexString() {
-        int color = getValue();
-        return String.format("#%06X", color & 0xFFFFFF);
-    }
-
-    public Color getColor() {
-        return new Color(getValue(), true);
-    }
-
-    public void setFromHSB(float hue, float saturation, float brightness) {
-        int rgb = Color.HSBtoRGB(hue, saturation, brightness);
-        setValue(rgb | 0xFF000000); // Ensure alpha is 255
-    }
-}
 
 public class ColorSettingComponent extends BaseSettingComponent<ColorSetting> {
     private final AnimationUtils.HoverAnimation pickerAnimation = new AnimationUtils.HoverAnimation();
