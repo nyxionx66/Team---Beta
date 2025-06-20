@@ -22,14 +22,13 @@ public class KeybindUtil {
     }
 
     public static boolean shouldProcessKeybinds() {
-        MinecraftClient mc = MinecraftClient.getInstance();
-        // Don't process keybinds if any screen is open (chat, inventory, pause menu, etc.)
-        return mc.currentScreen == null;
+        // Use our ScreenManager for more reliable screen detection
+        return !ScreenManager.isScreenOpen();
     }
 
     public static boolean isInGame() {
         MinecraftClient mc = MinecraftClient.getInstance();
-        return mc.player != null && mc.world != null && mc.currentScreen == null;
+        return mc.player != null && mc.world != null && !ScreenManager.isScreenOpen();
     }
 
     public static boolean isCtrlPressed() {
