@@ -57,9 +57,24 @@ public class DebugCommand extends Command {
         ChatUtil.sendMessage("§b" + Team.MOD_NAME + " Debug Information:");
         ChatUtil.sendMessage("§7─────────────────────────");
         ChatUtil.sendMessage("§7Mod Version: §f" + Team.VERSION);
-        ChatUtil.sendMessage("§7Debug Mode: " + (Team.getInstance().getConfig().getBoolean("debug") ? "§aEnabled" : "§cDisabled"));
+        
+        // Safe access to config with null check
+        try {
+            TeamConfig config = Team.getInstance().getConfig();
+            if (config != null) {
+                boolean debugMode = config.getBoolean("debug");
+                ChatUtil.sendMessage("§7Debug Mode: " + (debugMode ? "§aEnabled" : "§cDisabled"));
+                ChatUtil.sendMessage("§7Config File: §f" + config.getKeys().size() + " keys");
+            } else {
+                ChatUtil.sendMessage("§7Debug Mode: §cConfig not available");
+                ChatUtil.sendMessage("§7Config File: §cNot loaded");
+            }
+        } catch (Exception e) {
+            Team.LOGGER.error("Error accessing config in debug info", e);
+            ChatUtil.sendMessage("§7Debug Mode: §cError accessing config");
+        }
+        
         ChatUtil.sendMessage("§7Memory Usage: §f" + getMemoryUsage());
-        ChatUtil.sendMessage("§7Config File: §f" + Team.getInstance().getConfig().getKeys().size() + " keys");
     }
 
     private void showEventInfo() {
