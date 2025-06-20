@@ -18,20 +18,25 @@ public class ModeElement extends AbstractElement {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
 
-        // Setting background
-        int bgColor = hovered ? 0xFF2A2A2A : 0xFF1A1A1A;
+        // Setting background with better visual feedback
+        int bgColor = hovered ? 0xFF2F2F2F : 0xFF1F1F1F;
         context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), bgColor);
 
-        // Setting name
+        // Setting name with better positioning
         MinecraftClient mc = MinecraftClient.getInstance();
         context.drawText(mc.textRenderer, setting.getName(), 
-            (int) (x + 3), (int) (y + 2), 0xFFCCCCCC, false);
+            (int) (x + 4), (int) (y + 3), 0xFFDDDDDD, false);
 
-        // Current mode
+        // Current mode with better styling
         String currentMode = setting.getValue();
         int textWidth = mc.textRenderer.getWidth(currentMode);
+        
+        // Background for mode value
+        context.fill((int) (x + width - textWidth - 8), (int) (y + 1), 
+                    (int) (x + width - 2), (int) (y + height - 1), 0x604CAF50);
+        
         context.drawText(mc.textRenderer, currentMode, 
-            (int) (x + width - textWidth - 3), (int) (y + 2), 0xFF4CAF50, false);
+            (int) (x + width - textWidth - 5), (int) (y + 3), 0xFF4CAF50, false);
     }
 
     @Override
