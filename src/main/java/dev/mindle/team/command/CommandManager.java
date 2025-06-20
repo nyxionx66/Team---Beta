@@ -12,7 +12,6 @@ import dev.mindle.team.command.impl.info.*;
 import dev.mindle.team.command.impl.config.*;
 import dev.mindle.team.command.impl.util.*;
 import dev.mindle.team.command.impl.module.*;
-import dev.mindle.team.command.impl.gui.*;
 import dev.mindle.team.util.ChatUtil;
 
 public class CommandManager {
@@ -31,7 +30,6 @@ public class CommandManager {
         categories.put("config", new ArrayList<>());
         categories.put("util", new ArrayList<>());
         categories.put("module", new ArrayList<>());
-        categories.put("gui", new ArrayList<>());
     }
 
     public void registerCommands() {
@@ -54,9 +52,6 @@ public class CommandManager {
         // Module Commands
         registerCommand(new ModuleCommand(), "module");
         registerCommand(new KeybindCommand(), "module");
-        
-        // GUI Commands
-        registerCommand(new GUICommand(), "gui");
         
         Team.LOGGER.info("Registered {} commands across {} categories", 
             commands.size(), categories.size());

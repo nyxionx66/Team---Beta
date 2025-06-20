@@ -9,7 +9,6 @@ import dev.mindle.team.event.EventBus;
 import dev.mindle.team.command.CommandManager;
 import dev.mindle.team.config.TeamConfig;
 import dev.mindle.team.module.ModuleManager;
-import dev.mindle.team.gui.ClickGUIManager;
 
 public class Team implements ModInitializer, ClientModInitializer {
     public static final String MOD_ID = "team";
@@ -23,7 +22,6 @@ public class Team implements ModInitializer, ClientModInitializer {
     private EventBus eventBus;
     private TeamConfig config;
     private ModuleManager moduleManager;
-    private ClickGUIManager guiManager;
 
     public Team() {
         instance = this;
@@ -65,10 +63,6 @@ public class Team implements ModInitializer, ClientModInitializer {
             
             // Initialize module system
             this.moduleManager = new ModuleManager();
-            
-            // Initialize GUI system
-            this.guiManager = ClickGUIManager.getInstance();
-            this.guiManager.loadKeybind();
             
             LOGGER.info("{} client initialization complete!", MOD_NAME);
         } catch (Exception e) {
@@ -123,13 +117,5 @@ public class Team implements ModInitializer, ClientModInitializer {
 
     public void setConfig(TeamConfig config) {
         this.config = config;
-    }
-
-    public ClickGUIManager getGUIManager() {
-        if (guiManager == null) {
-            LOGGER.warn("GUIManager was null, initializing new instance");
-            guiManager = ClickGUIManager.getInstance();
-        }
-        return guiManager;
     }
 }
