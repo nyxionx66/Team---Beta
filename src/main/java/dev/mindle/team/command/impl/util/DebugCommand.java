@@ -199,3 +199,21 @@ public class DebugCommand extends Command {
             Team.LOGGER.error("Error accessing module manager in debug info", e);
             ChatUtil.sendMessage("§7Error accessing module system");
         }
+    }
+
+    @Override
+    public List<String> getSuggestions(String[] args) {
+        List<String> suggestions = new ArrayList<>();
+
+        if (args.length == 1) {
+            String partial = args[0].toLowerCase();
+            for (String option : new String[]{"info", "events", "commands", "system"}) {
+                if (option.startsWith(partial)) {
+                    suggestions.add(option);
+                }
+            }
+        }
+
+        return suggestions;
+    }
+}
