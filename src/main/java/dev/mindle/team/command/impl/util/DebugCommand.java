@@ -102,15 +102,24 @@ public class DebugCommand extends Command {
     }
 
     private void showCommandInfo() {
-        CommandManager cmdManager = Team.getInstance().getCommandManager();
-        ChatUtil.sendMessage("§aCommand System Details:");
-        ChatUtil.sendMessage("§7Total Commands: §f" + cmdManager.getTotalCommands());
-        ChatUtil.sendMessage("§7Command Prefix: §f" + CommandManager.PREFIX);
+        try {
+            CommandManager cmdManager = Team.getInstance().getCommandManager();
+            if (cmdManager != null) {
+                ChatUtil.sendMessage("§aCommand System Details:");
+                ChatUtil.sendMessage("§7Total Commands: §f" + cmdManager.getTotalCommands());
+                ChatUtil.sendMessage("§7Command Prefix: §f" + CommandManager.PREFIX);
 
-        ChatUtil.sendMessage("§7Categories:");
-        for (String category : cmdManager.getCategoryNames()) {
-            int count = cmdManager.getCommandsInCategory(category);
-            ChatUtil.sendMessage("  §f" + category + ": §7" + count + " commands");
+                ChatUtil.sendMessage("§7Categories:");
+                for (String category : cmdManager.getCategoryNames()) {
+                    int count = cmdManager.getCommandsInCategory(category);
+                    ChatUtil.sendMessage("  §f" + category + ": §7" + count + " commands");
+                }
+            } else {
+                ChatUtil.sendMessage("§7Command system not available");
+            }
+        } catch (Exception e) {
+            Team.LOGGER.error("Error accessing command manager in debug info", e);
+            ChatUtil.sendMessage("§7Error accessing command system");
         }
     }
 
