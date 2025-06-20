@@ -32,36 +32,44 @@ public class ClickGuiScreen extends Screen {
     protected void init() {
         if (firstOpen) {
             float offset = 0;
-            int windowHeight = 18;
+            int windowHeight = 20; // Slightly increased header height
+            int spacing = 8; // Better spacing between windows
 
             int halfWidth = width / 2;
-            int halfWidthCats = (int) ((((float) ModuleCategory.values().length - 1) / 2f) * (ClickGUI.moduleWidth.getValue().floatValue() + 4f));
+            int totalWidth = (int) ((ModuleCategory.values().length - 1) * (ClickGUI.moduleWidth.getValue().floatValue() + spacing));
+            int halfWidthCats = totalWidth / 2;
 
             for (ModuleCategory category : ModuleCategory.values()) {
                 List<Module> modules = Team.getInstance().getModuleManager().getModulesByCategory(category);
                 if (!modules.isEmpty()) {
                     CategoryWindow window = new CategoryWindow(category, modules, 
-                        (halfWidth - halfWidthCats) + offset, 20, ClickGUI.moduleWidth.getValue().floatValue(), windowHeight);
+                        (halfWidth - halfWidthCats) + offset, 30, ClickGUI.moduleWidth.getValue().floatValue(), windowHeight);
                     window.setOpen(true);
                     windows.add(window);
-                    offset += ClickGUI.moduleWidth.getValue().floatValue() + 2;
-                    if (offset > width) {
+                    offset += ClickGUI.moduleWidth.getValue().floatValue() + spacing;
+                    
+                    // Wrap to next row if needed
+                    if (offset > width - ClickGUI.moduleWidth.getValue().floatValue()) {
                         offset = 0;
                     }
                 }
             }
             firstOpen = false;
         } else {
+            // Reposition windows if they're off-screen
             if (!windows.isEmpty() && (windows.get(0).getX() < 0 || windows.get(0).getY() < 0)) {
                 float offset = 0;
+                int spacing = 8;
                 int halfWidth = width / 2;
-                int halfWidthCats = (int) (3 * (ClickGUI.moduleWidth.getValue().floatValue() + 4f));
+                int totalWidth = (int) (windows.size() * (ClickGUI.moduleWidth.getValue().floatValue() + spacing));
+                int halfWidthCats = totalWidth / 2;
 
                 for (CategoryWindow w : windows) {
                     w.setX((halfWidth - halfWidthCats) + offset);
-                    w.setY(20);
-                    offset += ClickGUI.moduleWidth.getValue().floatValue() + 2;
-                    if (offset > width) {
+                    w.setY(30);
+                    offset += ClickGUI.moduleWidth.getValue().floatValue() + spacing;
+                    
+                    if (offset > width - ClickGUI.moduleWidth.getValue().floatValue()) {
                         offset = 0;
                     }
                 }
