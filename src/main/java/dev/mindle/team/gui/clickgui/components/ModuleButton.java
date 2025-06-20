@@ -66,6 +66,8 @@ public class ModuleButton {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         hovered = RenderUtil.isHovered(mouseX, mouseY, x, y, width, height);
         
+        updateAnimations();
+        
         if (hovered && ClickGUI.descriptions.getValue()) {
             ClickGuiScreen.currentDescription = module.getDescription();
         }
@@ -76,6 +78,28 @@ public class ModuleButton {
         if (open && !elements.isEmpty()) {
             renderSettingsElements(context, mouseX, mouseY, delta);
         }
+    }
+    
+    private void updateAnimations() {
+        long currentTime = System.currentTimeMillis();
+        float deltaTime = (currentTime - lastUpdate) / 1000.0f;
+        lastUpdate = currentTime;
+        
+        // Hover animation
+        float hoverTarget = hovered ? 1.0f : 0.0f;
+        hoverAnimation = lerp(hoverAnimation, hoverTarget, deltaTime * 8.0f);
+        
+        // Enable animation  
+        float enableTarget = module.isEnabled() ? 1.0f : 0.0f;
+        enableAnimation = lerp(enableAnimation, enableTarget, deltaTime * 6.0f);
+        
+        // Open animation
+        float openTarget = open ? 1.0f : 0.0f;
+        openAnimation = lerp(openAnimation, openTarget, deltaTime * 10.0f);
+    }
+    
+    private float lerp(float a, float b, float t) {
+        return a + (b - a) * Math.min(1.0f, t);
     }
 
     private void renderButton(DrawContext context) {
