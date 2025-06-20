@@ -55,6 +55,9 @@ public class CommandManager {
         registerCommand(new ModuleCommand(), "module");
         registerCommand(new KeybindCommand(), "module");
         
+        // GUI Commands
+        registerCommand(new GUICommand(), "gui");
+        
         Team.LOGGER.info("Registered {} commands across {} categories", 
             commands.size(), categories.size());
         
