@@ -124,4 +124,12 @@ public class Team implements ModInitializer, ClientModInitializer {
     public void setConfig(TeamConfig config) {
         this.config = config;
     }
+
+    public ClickGUIManager getGUIManager() {
+        if (guiManager == null) {
+            LOGGER.warn("GUIManager was null, initializing new instance");
+            guiManager = ClickGUIManager.getInstance();
+        }
+        return guiManager;
+    }
 }
