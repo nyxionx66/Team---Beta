@@ -87,12 +87,9 @@ public class SettingsPanel extends BasePanel {
         int toggleX = headerX + headerWidth - ThemeManager.ComponentSize.TOGGLE_WIDTH - ThemeManager.Spacing.MEDIUM;
         int toggleY = headerY + (headerHeight - ThemeManager.ComponentSize.TOGGLE_HEIGHT) / 2;
         
-        boolean toggleHovered = RenderUtils.isPointInRect(parent.client.mouse.getX(), parent.client.mouse.getY(), 
-            toggleX, toggleY, ThemeManager.ComponentSize.TOGGLE_WIDTH, ThemeManager.ComponentSize.TOGGLE_HEIGHT);
-        
         RenderUtils.drawToggle(context, toggleX, toggleY, 
             ThemeManager.ComponentSize.TOGGLE_WIDTH, ThemeManager.ComponentSize.TOGGLE_HEIGHT, 
-            currentModule.isEnabled(), toggleHovered);
+            currentModule.isEnabled(), false);
     }
     
     private void renderSettings(DrawContext context, int mouseX, int mouseY, float delta, float alpha) {
