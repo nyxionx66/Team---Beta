@@ -17,6 +17,12 @@ public class TestCommand extends Command {
         if (args.length == 0) {
             ChatUtil.sendMessage("§aTest command executed successfully!");
             ChatUtil.sendMessage("§7This is a test command to verify the help system auto-detection works.");
+            
+            // Show screen status
+            ChatUtil.sendMessage("§7Screen Status:");
+            ChatUtil.sendMessage("§7- Screen Open: " + (ScreenManager.isScreenOpen() ? "§cYes" : "§aNo"));
+            ChatUtil.sendMessage("§7- Current Screen: §f" + ScreenManager.getScreenType());
+            ChatUtil.sendMessage("§7- Keybinds Allowed: " + (KeybindUtil.shouldProcessKeybinds() ? "§aYes" : "§cNo"));
         } else {
             String message = String.join(" ", args);
             ChatUtil.sendMessage("§aTest message: §f" + message);
