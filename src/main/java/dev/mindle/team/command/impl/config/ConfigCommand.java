@@ -128,20 +128,34 @@ public class ConfigCommand extends Command {
 
     private void setConfig(String key, String value) {
         try {
+            TeamConfig config = Team.getInstance().getConfig();
+            if (config == null) {
+                ChatUtil.sendMessage("§cConfiguration system not available");
+                return;
+            }
+            
             // Try to parse as different types
             if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
-                Team.getInstance().getConfig().setBoolean(key, Boolean.parseBoolean(value));
+                config.setBoolean(key, Boolean.parseBoolean(value));
             } else if (value.matches("-?\\d+")) {
-                Team.getInstance().getConfig().setInt(key, Integer.parseInt(value));
+                config.setInt(key, Integer.parseInt(value));
             } else if (value.matches("-?\\d*\\.\\d+")) {
-                Team.getInstance().getConfig().setDouble(key, Double.parseDouble(value));
+                config.setDouble(key, Double.parseDouble(value));
             } else {
-                Team.getInstance().getConfig().setString(key, value);
+                config.setString(key, value);
             }
 
-            ChatUtil.sendMessage("§7Set §f" + key + " §7to " + formatConfigValue(Team.getInstance().getConfig().get(key)));
+            Object newValue = config.get(key);
+            if (newValue != null) {
+                ChatUtil.sendMessage("§7Set §f" + key + " §7to " + formatConfigValue(newValue));
+            } else {
+                ChatUtil.sendMessage("§cFailed to set configuration value");
+            }
         } catch (NumberFormatException e) {
             ChatUtil.sendMessage("§cInvalid value format for: §f" + key);
+        } catch (Exception e) {
+            ChatUtil.sendMessage("§cError setting configuration: §f" + e.getMessage());
+            Team.LOGGER.error("Error setting config key: " + key, e);
         }
     }
 
