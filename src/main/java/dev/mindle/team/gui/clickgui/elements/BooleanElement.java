@@ -18,27 +18,38 @@ public class BooleanElement extends AbstractElement {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
 
-        // Setting background
-        int bgColor = hovered ? 0xFF2A2A2A : 0xFF1A1A1A;
+        // Setting background with better visual feedback
+        int bgColor = hovered ? 0xFF2F2F2F : 0xFF1F1F1F;
         context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), bgColor);
 
-        // Setting name
+        // Setting name with better positioning
         MinecraftClient mc = MinecraftClient.getInstance();
         context.drawText(mc.textRenderer, setting.getName(), 
-            (int) (x + 3), (int) (y + 2), 0xFFCCCCCC, false);
+            (int) (x + 4), (int) (y + 3), 0xFFDDDDDD, false);
 
-        // Toggle button
-        int toggleX = (int) (x + width - 15);
+        // Toggle button with improved design
+        int toggleX = (int) (x + width - 18);
         int toggleY = (int) (y + 2);
-        int toggleColor = setting.getValue() ? 0xFF4CAF50 : 0xFF444444;
+        int toggleWidth = 14;
+        int toggleHeight = 9;
         
-        context.fill(toggleX, toggleY, toggleX + 10, toggleY + 9, toggleColor);
+        // Background
+        int toggleBgColor = setting.getValue() ? 0xFF4CAF50 : 0xFF555555;
+        context.fill(toggleX, toggleY, toggleX + toggleWidth, toggleY + toggleHeight, toggleBgColor);
         
-        // Draw border manually
-        context.fill(toggleX, toggleY, toggleX + 10, toggleY + 1, 0xFF666666); // Top
-        context.fill(toggleX, toggleY + 8, toggleX + 10, toggleY + 9, 0xFF666666); // Bottom
-        context.fill(toggleX, toggleY, toggleX + 1, toggleY + 9, 0xFF666666); // Left
-        context.fill(toggleX + 9, toggleY, toggleX + 10, toggleY + 9, 0xFF666666); // Right
+        // Border
+        int borderColor = hovered ? 0xFF888888 : 0xFF666666;
+        context.fill(toggleX - 1, toggleY - 1, toggleX + toggleWidth + 1, toggleY, borderColor); // Top
+        context.fill(toggleX - 1, toggleY + toggleHeight, toggleX + toggleWidth + 1, toggleY + toggleHeight + 1, borderColor); // Bottom
+        context.fill(toggleX - 1, toggleY - 1, toggleX, toggleY + toggleHeight + 1, borderColor); // Left
+        context.fill(toggleX + toggleWidth, toggleY - 1, toggleX + toggleWidth + 1, toggleY + toggleHeight + 1, borderColor); // Right
+        
+        // Toggle indicator dot
+        if (setting.getValue()) {
+            context.fill(toggleX + 9, toggleY + 2, toggleX + 12, toggleY + 7, 0xFFFFFFFF);
+        } else {
+            context.fill(toggleX + 2, toggleY + 2, toggleX + 5, toggleY + 7, 0xFFAAAAAA);
+        }
     }
 
     @Override
