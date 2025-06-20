@@ -156,20 +156,32 @@ public class ModuleButton {
     private void renderText(DrawContext context) {
         MinecraftClient mc = MinecraftClient.getInstance();
         
-        // Module name
+        // Module name with better positioning and spacing
         int textColor = module.isEnabled() ? 0xFFFFFFFF : 0xFFAAAAAA;
+        int textBrightness = (int) (255 * (0.7f + 0.3f * enableAnimation));
+        if (module.isEnabled()) {
+            textColor = 0xFF000000 | (textBrightness << 16) | (textBrightness << 8) | textBrightness;
+        }
+        
         context.drawText(mc.textRenderer, module.getName(), 
-            (int) (x + 5), (int) (y + height / 2 - 4), textColor, true);
+            (int) (x + 8), (int) (y + height / 2 - 4), textColor, true);
 
-        // Show keybind or binding status
+        // Show keybind or binding status with better spacing
         if (binding) {
-            context.drawText(mc.textRenderer, "Press Key...", 
-                (int) (x + width - 60), (int) (y + height / 2 - 4), 0xFFFFFF00, true);
+            String bindingText = "Press Key...";
+            int bindingWidth = mc.textRenderer.getWidth(bindingText);
+            context.fill((int) (x + width - bindingWidth - 10), (int) (y + 2), 
+                        (int) (x + width - 2), (int) (y + height - 2), 0x80000000);
+            context.drawText(mc.textRenderer, bindingText, 
+                (int) (x + width - bindingWidth - 6), (int) (y + height / 2 - 4), 0xFFFFD700, true);
         } else if (module.hasKeybind()) {
             String keybindName = getKeybindName();
             int keybindWidth = mc.textRenderer.getWidth(keybindName);
+            // Add background for keybind
+            context.fill((int) (x + width - keybindWidth - 10), (int) (y + 2), 
+                        (int) (x + width - 2), (int) (y + height - 2), 0x40FFFFFF);
             context.drawText(mc.textRenderer, keybindName, 
-                (int) (x + width - keybindWidth - 5), (int) (y + height / 2 - 4), 0xFF888888, true);
+                (int) (x + width - keybindWidth - 6), (int) (y + height / 2 - 4), 0xFFCCCCCC, true);
         }
     }
 
