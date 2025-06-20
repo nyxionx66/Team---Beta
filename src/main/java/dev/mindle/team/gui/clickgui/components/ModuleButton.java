@@ -103,11 +103,54 @@ public class ModuleButton {
     }
 
     private void renderButton(DrawContext context) {
-        int buttonColor = module.isEnabled() ? 0xFF4A4A4A : 0xFF2A2A2A;
-        if (hovered) {
-            buttonColor = module.isEnabled() ? 0xFF5A5A5A : 0xFF3A3A3A;
+        // Base colors - more vibrant and distinguishable
+        int baseDisabled = 0xFF1E1E1E;  // Darker base for disabled
+        int baseEnabled = 0xFF2E7D32;   // Green tint for enabled
+        int hoverDisabled = 0xFF2A2A2A;  // Lighter hover for disabled
+        int hoverEnabled = 0xFF4CAF50;   // Brighter green for enabled hover
+        
+        // Interpolate colors based on animations
+        int finalColor;
+        if (module.isEnabled()) {
+            finalColor = interpolateColor(baseEnabled, hoverEnabled, hoverAnimation);
+        } else {
+            finalColor = interpolateColor(baseDisabled, hoverDisabled, hoverAnimation);
         }
-        context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), buttonColor);
+        
+        // Add subtle border effect for enabled modules
+        if (module.isEnabled()) {
+            int borderColor = interpolateColor(0xFF1B5E20, 0xFF2E7D32, enableAnimation);
+            context.fill((int) x - 1, (int) y - 1, (int) (x + width + 1), (int) (y + height + 1), borderColor);
+        }
+        
+        context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), finalColor);
+        
+        // Add binding indicator
+        if (binding) {
+            int flashColor = (System.currentTimeMillis() / 200) % 2 == 0 ? 0xFF FFD700 : finalColor;
+            context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), flashColor);
+        }
+    }
+    
+    private int interpolateColor(int color1, int color2, float factor) {
+        factor = Math.max(0, Math.min(1, factor));
+        
+        int a1 = (color1 >> 24) & 0xFF;
+        int r1 = (color1 >> 16) & 0xFF;
+        int g1 = (color1 >> 8) & 0xFF;
+        int b1 = color1 & 0xFF;
+        
+        int a2 = (color2 >> 24) & 0xFF;
+        int r2 = (color2 >> 16) & 0xFF;
+        int g2 = (color2 >> 8) & 0xFF;
+        int b2 = color2 & 0xFF;
+        
+        int a = (int) (a1 + (a2 - a1) * factor);
+        int r = (int) (r1 + (r2 - r1) * factor);
+        int g = (int) (g1 + (g2 - g1) * factor);
+        int b = (int) (b1 + (b2 - b1) * factor);
+        
+        return (a << 24) | (r << 16) | (g << 8) | b;
     }
 
     private void renderText(DrawContext context) {
