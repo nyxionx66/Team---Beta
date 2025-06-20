@@ -120,7 +120,7 @@ public class CategoryWindow {
     }
 
     private float getModuleAreaHeight() {
-        return buttons.size() * (ClickGUI.moduleHeight.getValue() + 1);
+        return buttons.size() * (ClickGUI.moduleHeight.getValue().floatValue() + 1);
     }
 
     // Getters and setters
