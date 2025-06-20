@@ -94,13 +94,29 @@ public class ToggleCommand extends Command {
     }
 
     private void showFeatureList() {
-        for (String feature : TOGGLEABLE_FEATURES) {
-            boolean current = Team.getInstance().getConfig().getBoolean(feature);
-            String statusColor = current ? "§a" : "§c";
-            String statusText = current ? "ON" : "OFF";
-            ChatUtil.sendMessage("  §f" + feature + " " + statusColor + "[" + statusText + "]");
+        try {
+            TeamConfig config = Team.getInstance().getConfig();
+            if (config == null) {
+                ChatUtil.sendMessage("§cConfiguration system not available");
+                return;
+            }
+            
+            for (String feature : TOGGLEABLE_FEATURES) {
+                try {
+                    boolean current = config.getBoolean(feature);
+                    String statusColor = current ? "§a" : "§c";
+                    String statusText = current ? "ON" : "OFF";
+                    ChatUtil.sendMessage("  §f" + feature + " " + statusColor + "[" + statusText + "]");
+                } catch (Exception e) {
+                    ChatUtil.sendMessage("  §f" + feature + " §c[ERROR]");
+                    Team.LOGGER.debug("Error accessing feature state: " + feature, e);
+                }
+            }
+            ChatUtil.sendMessage("§7Use §f" + CommandManager.PREFIX + "toggle all §7to toggle everything");
+        } catch (Exception e) {
+            ChatUtil.sendMessage("§cError showing feature list: " + e.getMessage());
+            Team.LOGGER.error("Error in showFeatureList", e);
         }
-        ChatUtil.sendMessage("§7Use §f" + CommandManager.PREFIX + "toggle all §7to toggle everything");
     }
 
     @Override
