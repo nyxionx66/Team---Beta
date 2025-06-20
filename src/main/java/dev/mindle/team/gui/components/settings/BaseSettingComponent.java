@@ -68,15 +68,15 @@ public abstract class BaseSettingComponent<T extends Setting<?>> {
         int labelY = y + ThemeManager.Spacing.SMALL;
         
         // Setting name
-        context.drawText(context.getTextRenderer(), name, labelX, labelY, 
+        context.drawText(RenderUtils.getTextRenderer(), name, labelX, labelY, 
             theme.applyAlpha(theme.getTextPrimary(), alpha), false);
         
         // Setting description
         if (!description.isEmpty()) {
-            String truncatedDesc = RenderUtils.truncateText(context.getTextRenderer(), description, 
+            String truncatedDesc = RenderUtils.truncateText(RenderUtils.getTextRenderer(), description, 
                 width - getControlWidth() - 3 * ThemeManager.Spacing.MEDIUM);
-            int descY = labelY + context.getTextRenderer().fontHeight + 2;
-            context.drawText(context.getTextRenderer(), truncatedDesc, labelX, descY, 
+            int descY = labelY + RenderUtils.getTextRenderer().fontHeight + 2;
+            context.drawText(RenderUtils.getTextRenderer(), truncatedDesc, labelX, descY, 
                 theme.applyAlpha(theme.getTextSecondary(), alpha), false);
         }
     }

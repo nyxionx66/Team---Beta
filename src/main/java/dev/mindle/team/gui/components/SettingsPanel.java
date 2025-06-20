@@ -72,15 +72,15 @@ public class SettingsPanel extends BasePanel {
         // Module name
         String moduleName = currentModule.getName();
         int nameY = headerY + ThemeManager.Spacing.MEDIUM;
-        context.drawText(context.getTextRenderer(), moduleName, headerX + ThemeManager.Spacing.MEDIUM, nameY, 
+        context.drawText(RenderUtils.getTextRenderer(), moduleName, headerX + ThemeManager.Spacing.MEDIUM, nameY, 
             theme.applyAlpha(theme.getTextPrimary(), alpha), false);
         
         // Module description
         String description = currentModule.getDescription();
-        String truncatedDesc = RenderUtils.truncateText(context.getTextRenderer(), description, 
+        String truncatedDesc = RenderUtils.truncateText(RenderUtils.getTextRenderer(), description, 
             headerWidth - 2 * ThemeManager.Spacing.MEDIUM);
-        int descY = nameY + context.getTextRenderer().fontHeight + 4;
-        context.drawText(context.getTextRenderer(), truncatedDesc, headerX + ThemeManager.Spacing.MEDIUM, descY, 
+        int descY = nameY + RenderUtils.getTextRenderer().fontHeight + 4;
+        context.drawText(RenderUtils.getTextRenderer(), truncatedDesc, headerX + ThemeManager.Spacing.MEDIUM, descY, 
             theme.applyAlpha(theme.getTextSecondary(), alpha), false);
         
         // Module toggle
@@ -122,21 +122,21 @@ public class SettingsPanel extends BasePanel {
     
     private void renderEmptyState(DrawContext context, float alpha) {
         String emptyText = "Select a module to view settings";
-        int textWidth = context.getTextRenderer().getWidth(emptyText);
+        int textWidth = RenderUtils.getTextRenderer().getWidth(emptyText);
         int textX = x + (width - textWidth) / 2;
         int textY = y + height / 2;
         
-        context.drawText(context.getTextRenderer(), emptyText, textX, textY, 
+        context.drawText(RenderUtils.getTextRenderer(), emptyText, textX, textY, 
             theme.applyAlpha(theme.getTextDisabled(), alpha), false);
     }
     
     private void renderNoSettings(DrawContext context, float alpha) {
         String noSettingsText = "This module has no settings";
-        int textWidth = context.getTextRenderer().getWidth(noSettingsText);
+        int textWidth = RenderUtils.getTextRenderer().getWidth(noSettingsText);
         int textX = x + (width - textWidth) / 2;
         int textY = y + 120; // Below header
         
-        context.drawText(context.getTextRenderer(), noSettingsText, textX, textY, 
+        context.drawText(RenderUtils.getTextRenderer(), noSettingsText, textX, textY, 
             theme.applyAlpha(theme.getTextSecondary(), alpha), false);
     }
     
