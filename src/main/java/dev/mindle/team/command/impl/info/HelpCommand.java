@@ -78,6 +78,21 @@ public class HelpCommand extends Command {
         }
     }
 
+    private String formatCategoryName(String categoryName) {
+        // Convert category names to display format
+        switch (categoryName.toLowerCase()) {
+            case "info": return "Information Commands";
+            case "config": return "Configuration Commands";
+            case "util": return "Utility Commands";
+            case "module": return "Module Commands";
+            case "general": return "General Commands";
+            default: 
+                // Capitalize first letter and replace underscores with spaces
+                return categoryName.substring(0, 1).toUpperCase() + 
+                       categoryName.substring(1).replace("_", " ") + " Commands";
+        }
+    }
+
     private String getCommandCategory(Command command) {
         String className = command.getClass().getName();
         if (className.contains(".info.")) return "Information";
