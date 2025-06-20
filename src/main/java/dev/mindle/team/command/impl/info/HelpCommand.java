@@ -28,8 +28,8 @@ public class HelpCommand extends Command {
         ChatUtil.sendMessage("§7─────────────────────────");
         
         // Auto-fetch all categories and their commands
-        var commandManager = Team.getInstance().getCommandManager();
-        var allCategories = commandManager.getAllCategories();
+        CommandManager commandManager = Team.getInstance().getCommandManager();
+        Map<String, List<Command>> allCategories = commandManager.getAllCategories();
         
         // Display each category with different colors
         String[] categoryColors = {"§9", "§a", "§e", "§d", "§c", "§6", "§b"};
