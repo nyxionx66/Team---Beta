@@ -7,8 +7,16 @@ public class ChatUtil {
     private static final MinecraftClient mc = MinecraftClient.getInstance();
 
     public static void sendMessage(String message) {
-        if (mc.player != null) {
-            mc.player.sendMessage(Text.literal(message), false);
+        try {
+            if (mc.player != null) {
+                mc.player.sendMessage(Text.literal(message), false);
+            } else {
+                // Fallback to logger if player is not available
+                System.out.println("[Team] " + message.replaceAll("§[0-9a-fk-or]", ""));
+            }
+        } catch (Exception e) {
+            // Fallback to system output if all else fails
+            System.out.println("[Team] " + message.replaceAll("§[0-9a-fk-or]", ""));
         }
     }
 
