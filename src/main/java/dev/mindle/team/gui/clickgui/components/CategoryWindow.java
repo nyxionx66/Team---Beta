@@ -177,7 +177,7 @@ public class CategoryWindow {
     }
 
     private float getModuleAreaHeight() {
-        return buttons.size() * (ClickGUI.moduleHeight.getValue().floatValue() + 1);
+        return buttons.size() * (ClickGUI.moduleHeight.getValue().floatValue() + 2); // Increased spacing
     }
 
     // Getters and setters
