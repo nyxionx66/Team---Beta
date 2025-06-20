@@ -37,6 +37,9 @@ public class Keybind {
         // Check if we should process keybinds (no screen open)
         if (!KeybindUtil.shouldProcessKeybinds()) {
             // Reset pressed state to prevent actions when screen closes
+            if (this.pressed) {
+                Team.LOGGER.debug("Keybind {} blocked due to open screen: {}", name, KeybindUtil.getCurrentScreenType());
+            }
             this.pressed = false;
             return;
         }
@@ -46,6 +49,7 @@ public class Keybind {
             if (pressed && !lastPressed) {
                 if (onPress != null) {
                     try {
+                        Team.LOGGER.debug("Executing keybind toggle: {}", name);
                         onPress.run();
                     } catch (Exception e) {
                         Team.LOGGER.error("Error executing keybind action for: " + name, e);
@@ -57,6 +61,7 @@ public class Keybind {
             if (pressed && !lastPressed) {
                 if (onPress != null) {
                     try {
+                        Team.LOGGER.debug("Executing keybind press: {}", name);
                         onPress.run();
                     } catch (Exception e) {
                         Team.LOGGER.error("Error executing keybind press action for: " + name, e);
@@ -65,6 +70,7 @@ public class Keybind {
             } else if (!pressed && lastPressed) {
                 if (onRelease != null) {
                     try {
+                        Team.LOGGER.debug("Executing keybind release: {}", name);
                         onRelease.run();
                     } catch (Exception e) {
                         Team.LOGGER.error("Error executing keybind release action for: " + name, e);
