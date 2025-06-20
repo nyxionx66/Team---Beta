@@ -29,11 +29,16 @@ public class Team implements ModInitializer, ClientModInitializer {
     public void onInitialize() {
         LOGGER.info("Initializing {} v{}", MOD_NAME, VERSION);
         
-        // Initialize core systems
-        this.config = new TeamConfig();
-        this.eventBus = new EventBus();
-        
-        LOGGER.info("{} initialized successfully!", MOD_NAME);
+        try {
+            // Initialize core systems
+            this.config = new TeamConfig();
+            this.eventBus = new EventBus();
+            
+            LOGGER.info("{} initialized successfully!", MOD_NAME);
+        } catch (Exception e) {
+            LOGGER.error("Failed to initialize {}", MOD_NAME, e);
+            throw new RuntimeException("Failed to initialize " + MOD_NAME, e);
+        }
     }
 
     @Override
