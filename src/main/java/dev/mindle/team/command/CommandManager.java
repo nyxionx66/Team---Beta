@@ -107,11 +107,15 @@ public class CommandManager {
             long endTime = System.nanoTime();
             
             // Log execution time for debugging
-            if (Team.getInstance().getConfig().getBoolean("debug")) {
+            if (Team.getInstance() != null && 
+                Team.getInstance().getConfig() != null && 
+                Team.getInstance().getConfig().getBoolean("debug")) {
                 double executionTime = (endTime - startTime) / 1_000_000.0; // Convert to milliseconds
                 Team.LOGGER.debug("Command '{}' executed in {:.2f}ms", commandName, executionTime);
             }
             
+        } catch (IllegalArgumentException e) {
+            ChatUtil.sendMessage("§cUsage Error: §f" + e.getMessage());
         } catch (Exception e) {
             ChatUtil.sendMessage("§cError executing command: §f" + e.getMessage());
             Team.LOGGER.error("Error executing command: {}", commandName, e);
