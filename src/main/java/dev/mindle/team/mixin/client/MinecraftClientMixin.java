@@ -14,17 +14,27 @@ public class MinecraftClientMixin {
 
     @Inject(method = "tick", at = @At("HEAD"))
     private void onPreTick(CallbackInfo ci) {
-        // Add null check to prevent crashes during initialization
-        if (Team.getInstance() != null && Team.getInstance().getEventBus() != null) {
-            Team.getInstance().getEventBus().post(new UpdateEvent.Pre());
+        // Add comprehensive null checks to prevent crashes during initialization
+        try {
+            if (Team.getInstance() != null && Team.getInstance().getEventBus() != null) {
+                Team.getInstance().getEventBus().post(new UpdateEvent.Pre());
+            }
+        } catch (Exception e) {
+            // Log error but don't crash the game
+            Team.LOGGER.error("Error in MinecraftClientMixin.onPreTick", e);
         }
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
     private void onPostTick(CallbackInfo ci) {
-        // Add null check to prevent crashes during initialization
-        if (Team.getInstance() != null && Team.getInstance().getEventBus() != null) {
-            Team.getInstance().getEventBus().post(new UpdateEvent.Post());
+        // Add comprehensive null checks to prevent crashes during initialization
+        try {
+            if (Team.getInstance() != null && Team.getInstance().getEventBus() != null) {
+                Team.getInstance().getEventBus().post(new UpdateEvent.Post());
+            }
+        } catch (Exception e) {
+            // Log error but don't crash the game
+            Team.LOGGER.error("Error in MinecraftClientMixin.onPostTick", e);
         }
     }
 }
