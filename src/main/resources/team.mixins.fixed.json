@@ -1,0 +1,17 @@
+{
+	"required": true,
+	"package": "dev.mindle.team.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+	],
+	"client": [
+		"input.KeyboardMixin",
+		"input.MouseMixin",
+		"client.MinecraftClientMixin",
+		"client.ChatScreenMixin",
+		"client.ScreenMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
