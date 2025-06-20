@@ -17,7 +17,18 @@ public class KeybindUtil {
     }
 
     public static boolean isKeyPressed(int key) {
-        return InputUtil.isKeyPressed(net.minecraft.client.MinecraftClient.getInstance().getWindow().getHandle(), key);
+        return InputUtil.isKeyPressed(MinecraftClient.getInstance().getWindow().getHandle(), key);
+    }
+
+    public static boolean shouldProcessKeybinds() {
+        MinecraftClient mc = MinecraftClient.getInstance();
+        // Don't process keybinds if any screen is open (chat, inventory, pause menu, etc.)
+        return mc.currentScreen == null;
+    }
+
+    public static boolean isInGame() {
+        MinecraftClient mc = MinecraftClient.getInstance();
+        return mc.player != null && mc.world != null && mc.currentScreen == null;
     }
 
     public static boolean isCtrlPressed() {
