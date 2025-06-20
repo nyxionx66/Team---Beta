@@ -23,6 +23,13 @@ public class Team implements ModInitializer, ClientModInitializer {
 
     public Team() {
         instance = this;
+        // Early initialization of config to prevent null access
+        try {
+            this.config = new TeamConfig();
+            LOGGER.debug("Early config initialization successful");
+        } catch (Exception e) {
+            LOGGER.error("Failed to initialize config early", e);
+        }
     }
 
     @Override
