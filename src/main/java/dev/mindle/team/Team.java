@@ -120,6 +120,14 @@ public class Team implements ModInitializer, ClientModInitializer {
         return moduleManager;
     }
 
+    public KeybindManager getKeybindManager() {
+        if (keybindManager == null) {
+            LOGGER.warn("KeybindManager was null, initializing new instance");
+            keybindManager = new KeybindManager();
+        }
+        return keybindManager;
+    }
+
     public void setConfig(TeamConfig config) {
         this.config = config;
     }
