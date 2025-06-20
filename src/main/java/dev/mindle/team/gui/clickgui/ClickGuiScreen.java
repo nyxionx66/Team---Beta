@@ -40,10 +40,10 @@ public class ClickGuiScreen extends Screen {
                 List<Module> modules = Team.getInstance().getModuleManager().getModulesByCategory(category);
                 if (!modules.isEmpty()) {
                     CategoryWindow window = new CategoryWindow(category, modules, 
-                        (halfWidth - halfWidthCats) + offset, 20, ClickGUI.moduleWidth.getValue().intValue(), windowHeight);
+                        (halfWidth - halfWidthCats) + offset, 20, ClickGUI.moduleWidth.getValue().floatValue(), windowHeight);
                     window.setOpen(true);
                     windows.add(window);
-                    offset += ClickGUI.moduleWidth.getValue() + 2;
+                    offset += ClickGUI.moduleWidth.getValue().floatValue() + 2;
                     if (offset > width) {
                         offset = 0;
                     }
