@@ -160,13 +160,12 @@ public class ModuleButton {
     }
 
     private void renderSettingsElements(DrawContext context, int mouseX, int mouseY, float delta) {
-        if (openAnimation <= 0.01f) return; // Don't render if barely open
+        if (!open) return; // Don't render if not open
         
         float currentY = y + height + 1; // Small gap
         
-        // Calculate animated height
-        float maxSettingsHeight = elements.size() * 16 + 4; // Clean spacing
-        float settingsHeight = maxSettingsHeight * openAnimation;
+        // Calculate settings height
+        float settingsHeight = elements.size() * 16 + 4; // Clean spacing
         
         // Clean black background with white border
         context.fill((int) x, (int) currentY, (int) (x + width), (int) (currentY + settingsHeight), 0xFF000000);
@@ -179,20 +178,12 @@ public class ModuleButton {
         
         // Render elements with clean spacing
         float elementY = currentY + 2; // Top padding
-        for (int i = 0; i < elements.size(); i++) {
-            if (elementY > currentY + settingsHeight - 14) break; // Don't render outside animated area
-            
-            AbstractElement element = elements.get(i);
+        for (AbstractElement element : elements) {
             element.setX(x + 2); // Clean padding
             element.setY(elementY);
             element.setWidth(width - 4); // Clean padding
             element.setHeight(14); // Standard height
-            
-            // Only render if fully visible in animated area
-            if (elementY + 14 <= currentY + settingsHeight) {
-                element.render(context, mouseX, mouseY, delta);
-            }
-            
+            element.render(context, mouseX, mouseY, delta);
             elementY += 16; // Clean spacing
         }
     }
