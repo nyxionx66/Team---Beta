@@ -163,32 +163,29 @@ public class ModuleButton {
     private void renderText(DrawContext context) {
         MinecraftClient mc = MinecraftClient.getInstance();
         
-        // Module name with better positioning and spacing
-        int textColor = module.isEnabled() ? 0xFFFFFFFF : 0xFFAAAAAA;
-        int textBrightness = (int) (255 * (0.7f + 0.3f * enableAnimation));
-        if (module.isEnabled()) {
-            textColor = 0xFF000000 | (textBrightness << 16) | (textBrightness << 8) | textBrightness;
-        }
+        // Clean black and white text colors
+        int textColor = module.isEnabled() ? 0xFF000000 : 0xFFFFFFFF; // Black on white, white on black
         
+        // Module name with clean spacing
         context.drawText(mc.textRenderer, module.getName(), 
-            (int) (x + 8), (int) (y + height / 2 - 4), textColor, true);
+            (int) (x + 6), (int) (y + height / 2 - 4), textColor, false);
 
-        // Show keybind or binding status with better spacing
+        // Keybind display with minimal design
         if (binding) {
-            String bindingText = "Press Key...";
+            String bindingText = "...";
             int bindingWidth = mc.textRenderer.getWidth(bindingText);
-            context.fill((int) (x + width - bindingWidth - 10), (int) (y + 2), 
-                        (int) (x + width - 2), (int) (y + height - 2), 0x80000000);
             context.drawText(mc.textRenderer, bindingText, 
-                (int) (x + width - bindingWidth - 6), (int) (y + height / 2 - 4), 0xFFFFD700, true);
+                (int) (x + width - bindingWidth - 6), (int) (y + height / 2 - 4), textColor, false);
         } else if (module.hasKeybind()) {
             String keybindName = getKeybindName();
             int keybindWidth = mc.textRenderer.getWidth(keybindName);
-            // Add background for keybind
-            context.fill((int) (x + width - keybindWidth - 10), (int) (y + 2), 
-                        (int) (x + width - 2), (int) (y + height - 2), 0x40FFFFFF);
-            context.drawText(mc.textRenderer, keybindName, 
-                (int) (x + width - keybindWidth - 6), (int) (y + height / 2 - 4), 0xFFCCCCCC, true);
+            
+            // Simple bracket notation for keybind
+            String displayText = "[" + keybindName + "]";
+            int displayWidth = mc.textRenderer.getWidth(displayText);
+            context.drawText(mc.textRenderer, displayText, 
+                (int) (x + width - displayWidth - 6), (int) (y + height / 2 - 4), 
+                module.isEnabled() ? 0xFF666666 : 0xFF999999, false);
         }
     }
 
