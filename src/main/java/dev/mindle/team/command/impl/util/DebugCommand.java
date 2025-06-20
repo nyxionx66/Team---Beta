@@ -36,6 +36,9 @@ public class DebugCommand extends Command {
             case "commands":
                 showCommandInfo();
                 break;
+            case "modules":
+                showModuleInfo();
+                break;
             case "system":
                 showSystemInfo();
                 break;
