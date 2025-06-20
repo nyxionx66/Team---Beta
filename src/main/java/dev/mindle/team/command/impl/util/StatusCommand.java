@@ -57,10 +57,12 @@ public class StatusCommand extends Command {
         try {
             if (Team.getInstance() != null && Team.getInstance().getModuleManager() != null) {
                 var moduleManager = Team.getInstance().getModuleManager();
-                ChatUtil.sendMessage("§9Module System:");
-                ChatUtil.sendMessage("§7- Total Modules: §f" + moduleManager.getTotalModules());
-                ChatUtil.sendMessage("§7- Enabled: §a" + moduleManager.getEnabledCount());
-                ChatUtil.sendMessage("§7- Keybinds: §f" + moduleManager.getKeybindManager().getTotalKeybinds());
+                if (moduleManager != null) {
+                    ChatUtil.sendMessage("§9Module System:");
+                    ChatUtil.sendMessage("§7- Total Modules: §f" + moduleManager.getTotalModules());
+                    ChatUtil.sendMessage("§7- Enabled: §a" + moduleManager.getEnabledCount());
+                    ChatUtil.sendMessage("§7- Keybinds: §f" + moduleManager.getKeybindManager().getTotalKeybinds());
+                }
             }
         } catch (Exception e) {
             ChatUtil.sendMessage("§9Module System: §cError accessing");
