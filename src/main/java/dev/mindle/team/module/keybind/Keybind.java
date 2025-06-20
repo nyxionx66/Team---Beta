@@ -2,6 +2,7 @@ package dev.mindle.team.module.keybind;
 
 import dev.mindle.team.Team;
 import dev.mindle.team.util.KeybindUtil;
+import net.minecraft.client.MinecraftClient;
 import org.lwjgl.glfw.GLFW;
 
 public class Keybind {
