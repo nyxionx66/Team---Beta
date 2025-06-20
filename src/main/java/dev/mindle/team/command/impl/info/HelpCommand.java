@@ -2,6 +2,7 @@ package dev.mindle.team.command.impl.info;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import dev.mindle.team.Team;
 import dev.mindle.team.command.Command;
