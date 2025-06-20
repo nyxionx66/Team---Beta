@@ -78,6 +78,10 @@ public class Team implements ModInitializer, ClientModInitializer {
     }
 
     public EventBus getEventBus() {
+        if (eventBus == null) {
+            LOGGER.warn("EventBus was null, initializing new instance");
+            eventBus = new EventBus();
+        }
         return eventBus;
     }
 
