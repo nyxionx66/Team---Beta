@@ -36,6 +36,10 @@ public class RenderUtil {
         context.fill(x2 - 1, y1, x2, y2, outlineColor); // Right
     }
 
+    public static boolean isHovered(double mouseX, double mouseY, double x, double y, double width, double height) {
+        return mouseX >= x && mouseX <= x + width && mouseY >= y && mouseY <= y + height;
+    }
+
     public static Vec3d getInterpolatedPlayerPosition(float tickDelta) {
         if (mc.player == null) return Vec3d.ZERO;
         
