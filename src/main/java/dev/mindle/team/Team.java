@@ -58,7 +58,14 @@ public class Team implements ModInitializer, ClientModInitializer {
     }
 
     public static Team getInstance() {
+        if (instance == null) {
+            LOGGER.warn("Team instance requested before initialization!");
+        }
         return instance;
+    }
+
+    public static boolean isInitialized() {
+        return instance != null;
     }
 
     public CommandManager getCommandManager() {
