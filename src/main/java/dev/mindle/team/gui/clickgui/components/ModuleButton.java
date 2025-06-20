@@ -180,10 +180,27 @@ public class ModuleButton {
 
     private void handleBindingKey(int keyCode) {
         if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
-            // Clear keybind - would need to implement this in the Module class
+            // Clear keybind
+            if (module.hasKeybind()) {
+                module.getKeybind().setKey(GLFW.GLFW_KEY_UNKNOWN);
+                Team.getInstance().getKeybindManager().saveKeybinds();
+            }
             binding = false;
         } else {
-            // Set new keybind - would need to implement this in the Module class
+            // Set new keybind
+            if (module.hasKeybind()) {
+                module.getKeybind().setKey(keyCode);
+                Team.getInstance().getKeybindManager().saveKeybinds();
+            } else {
+                // Create new keybind if module doesn't have one
+                Keybind newKeybind = Team.getInstance().getKeybindManager().registerKeybind(
+                    module.getName() + "_toggle", 
+                    keyCode, 
+                    module.getKeybindType(), 
+                    module::toggle
+                );
+                // We need to add a method to set keybind in Module class
+            }
             binding = false;
         }
     }
