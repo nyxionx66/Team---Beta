@@ -21,6 +21,7 @@ public class Team implements ModInitializer, ClientModInitializer {
     private CommandManager commandManager;
     private EventBus eventBus;
     private TeamConfig config;
+    private ModuleManager moduleManager;
 
     public Team() {
         instance = this;
