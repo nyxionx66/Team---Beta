@@ -3,7 +3,15 @@ package dev.mindle.team.gui.clickgui;
 import dev.mindle.team.module.Module;
 import dev.mindle.team.module.impl.client.ClickGUI;
 import dev.mindle.team.module.setting.Setting;
+import dev.mindle.team.module.setting.BooleanSetting;
+import dev.mindle.team.module.setting.NumberSetting;
+import dev.mindle.team.module.setting.ModeSetting;
+import dev.mindle.team.gui.clickgui.elements.AbstractElement;
+import dev.mindle.team.gui.clickgui.elements.BooleanElement;
+import dev.mindle.team.gui.clickgui.elements.NumberElement;
+import dev.mindle.team.gui.clickgui.elements.ModeElement;
 import dev.mindle.team.util.RenderUtil;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
 
@@ -12,7 +20,7 @@ import java.util.List;
 
 public class ModuleButton {
     private final Module module;
-    private final List<SettingElement> elements;
+    private final List<AbstractElement> elements;
     private float x, y, width, height;
     private boolean hovered;
     private boolean open;
@@ -25,13 +33,19 @@ public class ModuleButton {
         // Create setting elements for the module
         for (Setting<?> setting : module.getSettings()) {
             if (!setting.getName().equals("Enabled")) {
-                elements.add(new SettingElement(setting));
+                if (setting instanceof BooleanSetting) {
+                    elements.add(new BooleanElement(setting));
+                } else if (setting instanceof NumberSetting) {
+                    elements.add(new NumberElement(setting));
+                } else if (setting instanceof ModeSetting) {
+                    elements.add(new ModeElement(setting));
+                }
             }
         }
     }
 
     public void init() {
-        elements.forEach(SettingElement::init);
+        elements.forEach(AbstractElement::init);
     }
 
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
@@ -50,19 +64,20 @@ public class ModuleButton {
 
         // Module name
         int textColor = module.isEnabled() ? 0xFFFFFFFF : 0xFFAAAAAA;
-        context.drawText(context.getMatrices().peek().getPositionMatrix(), module.getName(), 
+        MinecraftClient mc = MinecraftClient.getInstance();
+        context.drawText(mc.textRenderer, module.getName(), 
             (int) (x + 5), (int) (y + height / 2 - 4), textColor, true);
 
         // Show keybind
         if (module.hasKeybind() && !binding) {
             String keybindName = getKeybindName();
-            int keybindWidth = keybindName.length() * 6; // Rough estimate
-            context.drawText(context.getMatrices().peek().getPositionMatrix(), keybindName, 
+            int keybindWidth = mc.textRenderer.getWidth(keybindName);
+            context.drawText(mc.textRenderer, keybindName, 
                 (int) (x + width - keybindWidth - 5), (int) (y + height / 2 - 4), 0xFF888888, true);
         }
 
         if (binding) {
-            context.drawText(context.getMatrices().peek().getPositionMatrix(), "Press Key...", 
+            context.drawText(mc.textRenderer, "Press Key...", 
                 (int) (x + width - 60), (int) (y + height / 2 - 4), 0xFFFFFF00, true);
         }
 
@@ -74,7 +89,7 @@ public class ModuleButton {
             float settingsHeight = elements.size() * 15;
             context.fill((int) x, (int) currentY, (int) (x + width), (int) (currentY + settingsHeight), 0xFF151515);
             
-            for (SettingElement element : elements) {
+            for (AbstractElement element : elements) {
                 element.setX(x + 2);
                 element.setY(currentY);
                 element.setWidth(width - 4);
@@ -145,7 +160,7 @@ public class ModuleButton {
     }
 
     public void tick() {
-        elements.forEach(SettingElement::tick);
+        elements.forEach(AbstractElement::tick);
     }
 
     // Getters and setters
