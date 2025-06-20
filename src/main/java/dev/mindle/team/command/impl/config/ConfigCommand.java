@@ -108,11 +108,21 @@ public class ConfigCommand extends Command {
     }
 
     private void getConfig(String key) {
-        Object value = Team.getInstance().getConfig().get(key);
-        if (value != null) {
-            ChatUtil.sendMessage("§f" + key + " §7= " + formatConfigValue(value));
-        } else {
-            ChatUtil.sendMessage("§cConfiguration key not found: §f" + key);
+        try {
+            TeamConfig config = Team.getInstance().getConfig();
+            if (config != null) {
+                Object value = config.get(key);
+                if (value != null) {
+                    ChatUtil.sendMessage("§f" + key + " §7= " + formatConfigValue(value));
+                } else {
+                    ChatUtil.sendMessage("§cConfiguration key not found: §f" + key);
+                }
+            } else {
+                ChatUtil.sendMessage("§cConfiguration system not available");
+            }
+        } catch (Exception e) {
+            ChatUtil.sendMessage("§cError accessing configuration key: §f" + key);
+            Team.LOGGER.error("Error accessing config key: " + key, e);
         }
     }
 
