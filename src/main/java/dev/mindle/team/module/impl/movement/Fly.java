@@ -23,8 +23,8 @@ public class Fly extends Module {
 
     @Override
     protected void initializeSettings() {
-        speed = addSetting(new NumberSetting(getName(), "Speed", "Flight speed", 1.0, 0.1, 10.0, 0.1));
-        noKick = addSetting(new BooleanSetting(getName(), "NoKick", "Prevents anti-cheat kicks", true));
+        speed = (NumberSetting) addSetting(new NumberSetting(getName(), "Speed", "Flight speed", 1.0, 0.1, 10.0, 0.1));
+        noKick = (BooleanSetting) addSetting(new BooleanSetting(getName(), "NoKick", "Prevents anti-cheat kicks", true));
     }
 
     @Override

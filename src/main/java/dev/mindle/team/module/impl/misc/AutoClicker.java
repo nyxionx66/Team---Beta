@@ -27,10 +27,10 @@ public class AutoClicker extends Module {
 
     @Override
     protected void initializeSettings() {
-        cps = addSetting(new NumberSetting(getName(), "CPS", "Clicks per second", 10.0, 1.0, 20.0, 0.5));
-        leftClick = addSetting(new BooleanSetting(getName(), "LeftClick", "Auto left click", true));
-        rightClick = addSetting(new BooleanSetting(getName(), "RightClick", "Auto right click", false));
-        mode = addSetting(new ModeSetting(getName(), "Mode", "Click mode", "Hold", "Hold", "Toggle"));
+        cps = (NumberSetting) addSetting(new NumberSetting(getName(), "CPS", "Clicks per second", 10.0, 1.0, 20.0, 0.5));
+        leftClick = (BooleanSetting) addSetting(new BooleanSetting(getName(), "LeftClick", "Auto left click", true));
+        rightClick = (BooleanSetting) addSetting(new BooleanSetting(getName(), "RightClick", "Auto right click", false));
+        mode = (ModeSetting) addSetting(new ModeSetting(getName(), "Mode", "Click mode", "Hold", "Hold", "Toggle"));
     }
 
     @Override

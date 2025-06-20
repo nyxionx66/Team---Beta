@@ -20,7 +20,7 @@ public class Speed extends Module {
 
     @Override
     protected void initializeSettings() {
-        speedMultiplier = addSetting(new NumberSetting(getName(), "Speed", "Speed multiplier", 2.0, 1.0, 10.0, 0.1));
+        speedMultiplier = (NumberSetting) addSetting(new NumberSetting(getName(), "Speed", "Speed multiplier", 2.0, 1.0, 10.0, 0.1));
     }
 
     @Override

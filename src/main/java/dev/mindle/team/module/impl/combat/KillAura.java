@@ -32,11 +32,11 @@ public class KillAura extends Module {
 
     @Override
     protected void initializeSettings() {
-        players = addSetting(new BooleanSetting(getName(), "Players", "Target players", true));
-        mobs = addSetting(new BooleanSetting(getName(), "Mobs", "Target hostile mobs", true));
-        animals = addSetting(new BooleanSetting(getName(), "Animals", "Target animals", false));
-        range = addSetting(new NumberSetting(getName(), "Range", "Attack range", 4.0, 1.0, 6.0, 0.1));
-        delay = addSetting(new NumberSetting(getName(), "Delay", "Attack delay in milliseconds", 100.0, 0.0, 1000.0, 10.0));
+        players = (BooleanSetting) addSetting(new BooleanSetting(getName(), "Players", "Target players", true));
+        mobs = (BooleanSetting) addSetting(new BooleanSetting(getName(), "Mobs", "Target hostile mobs", true));
+        animals = (BooleanSetting) addSetting(new BooleanSetting(getName(), "Animals", "Target animals", false));
+        range = (NumberSetting) addSetting(new NumberSetting(getName(), "Range", "Attack range", 4.0, 1.0, 6.0, 0.1));
+        delay = (NumberSetting) addSetting(new NumberSetting(getName(), "Delay", "Attack delay in milliseconds", 100.0, 0.0, 1000.0, 10.0));
     }
 
     @Override

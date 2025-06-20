@@ -23,8 +23,8 @@ public class AutoSprint extends Module {
 
     @Override
     protected void initializeSettings() {
-        keepSprint = addSetting(new BooleanSetting(getName(), "KeepSprint", "Keep sprinting while attacking", true));
-        multiDirection = addSetting(new BooleanSetting(getName(), "MultiDirection", "Sprint in all directions", false));
+        keepSprint = (BooleanSetting) addSetting(new BooleanSetting(getName(), "KeepSprint", "Keep sprinting while attacking", true));
+        multiDirection = (BooleanSetting) addSetting(new BooleanSetting(getName(), "MultiDirection", "Sprint in all directions", false));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class AutoSprint extends Module {
         shouldSprint = shouldSprint && 
                       !mc.player.isSneaking() && 
                       !mc.player.isSubmergedInWater() &&
-                      mc.player.getFoodData().getFoodLevel() > 6;
+                      mc.player.getHungerManager().getFoodLevel() > 6;
         
         if (shouldSprint) {
             mc.player.setSprinting(true);
