@@ -41,6 +41,7 @@ public class ModuleManager {
             registerPlayerModules();
             registerWorldModules();
             registerMiscModules();
+            registerClientModules();
             
         } catch (Exception e) {
             Team.LOGGER.error("Error registering modules", e);
