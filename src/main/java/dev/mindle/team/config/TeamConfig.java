@@ -142,4 +142,24 @@ public class TeamConfig {
         setDefaults();
         save();
     }
+
+    // Additional methods that might be called by other parts of the system
+    public String getBooleanString(String key) {
+        boolean value = getBoolean(key);
+        return value ? "true" : "false";
+    }
+
+    public void set(String key, Object value) {
+        config.put(key, value);
+        save();
+    }
+
+    public boolean hasKey(String key) {
+        return config.containsKey(key);
+    }
+
+    public void removeKey(String key) {
+        config.remove(key);
+        save();
+    }
 }
