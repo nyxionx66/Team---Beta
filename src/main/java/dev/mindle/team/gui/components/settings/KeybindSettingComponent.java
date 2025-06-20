@@ -2,61 +2,10 @@ package dev.mindle.team.gui.components.settings;
 
 import dev.mindle.team.gui.theme.ThemeManager;
 import dev.mindle.team.gui.utils.RenderUtils;
-import dev.mindle.team.module.setting.Setting;
+import dev.mindle.team.module.setting.KeybindSetting;
 import dev.mindle.team.util.KeybindUtil;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
-
-// Custom setting class for keybinds
-public class KeybindSetting extends Setting<Integer> {
-    public KeybindSetting(String module, String name, String description, Integer defaultValue) {
-        super(module, name, description, defaultValue);
-    }
-
-    @Override
-    public void setValue(Integer value) {
-        if (value != null) {
-            this.value = value;
-            save();
-        }
-    }
-
-    @Override
-    public Integer getValue() {
-        return value != null ? value : defaultValue;
-    }
-
-    @Override
-    public String getValueAsString() {
-        return String.valueOf(getValue());
-    }
-
-    @Override
-    public void setValueFromString(String value) {
-        if (value != null) {
-            try {
-                setValue(Integer.parseInt(value));
-            } catch (NumberFormatException e) {
-                resetToDefault();
-            }
-        }
-    }
-
-    @Override
-    public Setting<Integer> copy() {
-        KeybindSetting copy = new KeybindSetting(module, name, description, defaultValue);
-        copy.value = this.value;
-        return copy;
-    }
-
-    public String getKeyName() {
-        int keyCode = getValue();
-        if (keyCode == GLFW.GLFW_KEY_UNKNOWN) {
-            return "None";
-        }
-        return KeybindUtil.getKeyName(keyCode);
-    }
-}
 
 public class KeybindSettingComponent extends BaseSettingComponent<KeybindSetting> {
     private boolean waitingForKey = false;
