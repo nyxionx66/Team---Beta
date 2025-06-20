@@ -66,6 +66,10 @@ public class Team implements ModInitializer, ClientModInitializer {
             // Initialize module system
             this.moduleManager = new ModuleManager();
             
+            // Initialize GUI system
+            this.guiManager = ClickGUIManager.getInstance();
+            this.guiManager.loadKeybind();
+            
             LOGGER.info("{} client initialization complete!", MOD_NAME);
         } catch (Exception e) {
             LOGGER.error("Failed to initialize {} client features", MOD_NAME, e);
