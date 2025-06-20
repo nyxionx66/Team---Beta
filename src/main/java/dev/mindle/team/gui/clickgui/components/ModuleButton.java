@@ -186,19 +186,42 @@ public class ModuleButton {
     }
 
     private void renderSettingsElements(DrawContext context, int mouseX, int mouseY, float delta) {
+        if (openAnimation <= 0.01f) return; // Don't render if barely open
+        
         float currentY = y + height;
         
-        // Background for settings area
-        float settingsHeight = elements.size() * 15;
-        context.fill((int) x, (int) currentY, (int) (x + width), (int) (currentY + settingsHeight), 0xFF151515);
+        // Calculate animated height
+        float maxSettingsHeight = elements.size() * 17; // Increased spacing
+        float settingsHeight = maxSettingsHeight * openAnimation;
         
-        for (AbstractElement element : elements) {
-            element.setX(x + 2);
-            element.setY(currentY);
-            element.setWidth(width - 4);
+        // Background for settings area with gradient
+        int bgColor1 = 0xFF121212;
+        int bgColor2 = 0xFF0A0A0A;
+        
+        // Create gradient effect
+        for (int i = 0; i < settingsHeight; i++) {
+            float gradient = (float) i / settingsHeight;
+            int color = interpolateColor(bgColor1, bgColor2, gradient);
+            context.fill((int) x, (int) (currentY + i), (int) (x + width), (int) (currentY + i + 1), color);
+        }
+        
+        // Render elements with smooth animation
+        float elementY = currentY + 2; // Top padding
+        for (int i = 0; i < elements.size(); i++) {
+            if (elementY > currentY + settingsHeight) break; // Don't render outside animated area
+            
+            AbstractElement element = elements.get(i);
+            element.setX(x + 4); // Increased left padding
+            element.setY(elementY);
+            element.setWidth(width - 8); // Increased horizontal padding
             element.setHeight(13);
-            element.render(context, mouseX, mouseY, delta);
-            currentY += 15;
+            
+            // Only render if fully visible in animated area
+            if (elementY + 13 <= currentY + settingsHeight) {
+                element.render(context, mouseX, mouseY, delta);
+            }
+            
+            elementY += 17; // Increased vertical spacing
         }
     }
 
