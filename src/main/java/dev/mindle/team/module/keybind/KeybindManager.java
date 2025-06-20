@@ -3,6 +3,7 @@ package dev.mindle.team.module.keybind;
 import dev.mindle.team.Team;
 import dev.mindle.team.event.Subscribe;
 import dev.mindle.team.event.events.UpdateEvent;
+import dev.mindle.team.util.KeybindUtil;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.concurrent.ConcurrentHashMap;
