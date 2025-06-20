@@ -69,6 +69,11 @@ public class Team implements ModInitializer, ClientModInitializer {
     }
 
     public CommandManager getCommandManager() {
+        if (commandManager == null) {
+            LOGGER.warn("CommandManager was null, initializing new instance");
+            commandManager = new CommandManager();
+            commandManager.registerCommands();
+        }
         return commandManager;
     }
 
