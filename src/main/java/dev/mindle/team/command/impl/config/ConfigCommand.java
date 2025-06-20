@@ -77,10 +77,22 @@ public class ConfigCommand extends Command {
     private void showConfigCategory(String categoryName, String... keys) {
         ChatUtil.sendMessage(categoryName);
         for (String key : keys) {
-            Object value = Team.getInstance().getConfig().get(key);
-            if (value != null) {
-                String valueStr = formatConfigValue(value);
-                ChatUtil.sendMessage("  §f" + key + " §7= " + valueStr);
+            try {
+                TeamConfig config = Team.getInstance().getConfig();
+                if (config != null) {
+                    Object value = config.get(key);
+                    if (value != null) {
+                        String valueStr = formatConfigValue(value);
+                        ChatUtil.sendMessage("  §f" + key + " §7= " + valueStr);
+                    } else {
+                        ChatUtil.sendMessage("  §f" + key + " §7= §cnot set");
+                    }
+                } else {
+                    ChatUtil.sendMessage("  §f" + key + " §7= §cconfig unavailable");
+                }
+            } catch (Exception e) {
+                ChatUtil.sendMessage("  §f" + key + " §7= §cerror accessing");
+                Team.LOGGER.debug("Error accessing config key: " + key, e);
             }
         }
     }
