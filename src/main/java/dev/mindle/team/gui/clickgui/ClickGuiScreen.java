@@ -5,6 +5,7 @@ import dev.mindle.team.module.Module;
 import dev.mindle.team.module.ModuleCategory;
 import dev.mindle.team.module.ModuleManager;
 import dev.mindle.team.module.impl.client.ClickGUI;
+import dev.mindle.team.gui.clickgui.components.CategoryWindow;
 import dev.mindle.team.util.RenderUtil;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
