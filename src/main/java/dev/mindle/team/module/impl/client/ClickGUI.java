@@ -24,11 +24,11 @@ public class ClickGUI extends Module {
 
     @Override
     protected void initializeSettings() {
-        descriptions = addSetting(new BooleanSetting("Descriptions", true));
-        tips = addSetting(new BooleanSetting("Tips", true));
-        moduleWidth = addSetting(new NumberSetting("Module Width", 100, 80, 200, 1));
-        moduleHeight = addSetting(new NumberSetting("Module Height", 15, 10, 25, 1));
-        catHeight = addSetting(new NumberSetting("Category Height", 200, 100, 400, 1));
+        descriptions = addSetting(new BooleanSetting("ClickGUI", "Descriptions", "Show module descriptions", true));
+        tips = addSetting(new BooleanSetting("ClickGUI", "Tips", "Show usage tips", true));
+        moduleWidth = addSetting(new NumberSetting("ClickGUI", "Module Width", "Width of module categories", 100.0, 80.0, 200.0, 1.0));
+        moduleHeight = addSetting(new NumberSetting("ClickGUI", "Module Height", "Height of module buttons", 15.0, 10.0, 25.0, 1.0));
+        catHeight = addSetting(new NumberSetting("ClickGUI", "Category Height", "Maximum height of categories", 200.0, 100.0, 400.0, 1.0));
     }
 
     @Override
