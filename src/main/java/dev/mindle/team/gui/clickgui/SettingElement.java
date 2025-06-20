@@ -5,6 +5,7 @@ import dev.mindle.team.module.setting.BooleanSetting;
 import dev.mindle.team.module.setting.NumberSetting;
 import dev.mindle.team.module.setting.ModeSetting;
 import dev.mindle.team.util.RenderUtil;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
 public class SettingElement {
@@ -33,7 +34,8 @@ public class SettingElement {
         context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), bgColor);
 
         // Setting name
-        context.drawText(context.getMatrices().peek().getPositionMatrix(), setting.getName(), 
+        MinecraftClient mc = MinecraftClient.getInstance();
+        context.drawText(mc.textRenderer, setting.getName(), 
             (int) (x + 3), (int) (y + 2), 0xFFCCCCCC, false);
 
         // Render based on setting type
@@ -72,8 +74,9 @@ public class SettingElement {
         
         // Value text
         String valueText = String.format("%.1f", setting.getValue());
-        context.drawText(context.getMatrices().peek().getPositionMatrix(), valueText, 
-            (int) (x + width - valueText.length() * 6 - 3), (int) (y + 2), 0xFFFFFFFF, false);
+        MinecraftClient mc = MinecraftClient.getInstance();
+        context.drawText(mc.textRenderer, valueText, 
+            (int) (x + width - mc.textRenderer.getWidth(valueText) - 3), (int) (y + 2), 0xFFFFFFFF, false);
             
         // Handle dragging
         if (dragging) {
@@ -92,8 +95,9 @@ public class SettingElement {
     private void renderModeSetting(DrawContext context, ModeSetting setting) {
         // Current mode
         String currentMode = setting.getValue();
-        int textWidth = currentMode.length() * 6; // Rough estimate
-        context.drawText(context.getMatrices().peek().getPositionMatrix(), currentMode, 
+        MinecraftClient mc = MinecraftClient.getInstance();
+        int textWidth = mc.textRenderer.getWidth(currentMode);
+        context.drawText(mc.textRenderer, currentMode, 
             (int) (x + width - textWidth - 3), (int) (y + 2), 0xFF4CAF50, false);
     }
 
