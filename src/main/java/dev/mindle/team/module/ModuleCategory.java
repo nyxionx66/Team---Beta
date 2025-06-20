@@ -6,7 +6,8 @@ public enum ModuleCategory {
     RENDER("Render", "👁"),
     PLAYER("Player", "👤"),
     WORLD("World", "🌍"),
-    MISC("Misc", "🔧");
+    MISC("Misc", "🔧"),
+    CLIENT("Client", "⚙");
 
     private final String name;
     private final String icon;
