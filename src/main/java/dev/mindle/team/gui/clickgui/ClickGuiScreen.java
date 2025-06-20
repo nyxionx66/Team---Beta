@@ -54,7 +54,7 @@ public class ClickGuiScreen extends Screen {
             if (!windows.isEmpty() && (windows.get(0).getX() < 0 || windows.get(0).getY() < 0)) {
                 float offset = 0;
                 int halfWidth = width / 2;
-                int halfWidthCats = (int) (3 * (ClickGUI.moduleWidth.getValue() + 4f));
+                int halfWidthCats = (int) (3 * (ClickGUI.moduleWidth.getValue().floatValue() + 4f));
 
                 for (CategoryWindow w : windows) {
                     w.setX((halfWidth - halfWidthCats) + offset);
