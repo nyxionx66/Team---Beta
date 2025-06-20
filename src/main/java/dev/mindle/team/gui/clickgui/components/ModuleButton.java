@@ -30,6 +30,12 @@ public class ModuleButton {
     private boolean hovered;
     private boolean open;
     private boolean binding = false;
+    
+    // Animation fields
+    private float hoverAnimation = 0.0f;
+    private float enableAnimation = 0.0f;
+    private float openAnimation = 0.0f;
+    private long lastUpdate = System.currentTimeMillis();
 
     public ModuleButton(Module module) {
         this.module = module;
