@@ -17,10 +17,25 @@ public class ConfigCommand extends Command {
     public void execute(String[] args) {
         validateArgs(args, 1);
 
-        // Check if config is available
-        if (Team.getInstance().getConfig() == null) {
-            ChatUtil.sendMessage("§cConfiguration system not yet initialized. Please try again in a moment.");
-            return;
+        // Check if config is available with better error handling
+        TeamConfig config = null;
+        try {
+            config = Team.getInstance().getConfig();
+        } catch (Exception e) {
+            Team.LOGGER.error("Error accessing config", e);
+        }
+        
+        if (config == null) {
+            ChatUtil.sendMessage("§cConfiguration system not available. Attempting to initialize...");
+            try {
+                // Force initialization
+                Team.getInstance().setConfig(new TeamConfig());
+                config = Team.getInstance().getConfig();
+                ChatUtil.sendMessage("§aConfiguration system initialized successfully!");
+            } catch (Exception e) {
+                ChatUtil.sendMessage("§cFailed to initialize configuration system: " + e.getMessage());
+                return;
+            }
         }
 
         String action = args[0].toLowerCase();
