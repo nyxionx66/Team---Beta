@@ -24,7 +24,7 @@ public class ModuleButton {
         
         // Create setting elements for the module
         for (Setting<?> setting : module.getSettings()) {
-            if (!setting.getName().equals("Enabled") && !setting.getName().equals("Keybind")) {
+            if (!setting.getName().equals("Enabled")) {
                 elements.add(new SettingElement(setting));
             }
         }
@@ -37,7 +37,7 @@ public class ModuleButton {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         hovered = RenderUtil.isHovered(mouseX, mouseY, x, y, width, height);
         
-        if (hovered && !ClickGuiScreen.currentDescription.isEmpty()) {
+        if (hovered && ClickGUI.descriptions.getValue()) {
             ClickGuiScreen.currentDescription = module.getDescription();
         }
 
@@ -54,10 +54,10 @@ public class ModuleButton {
             (int) (x + 5), (int) (y + height / 2 - 4), textColor, true);
 
         // Show keybind
-        String keybind = module.getBind();
-        if (!keybind.equals("NONE") && !binding) {
-            int keybindWidth = keybind.length() * 6; // Rough estimate
-            context.drawText(context.getMatrices().peek().getPositionMatrix(), keybind, 
+        if (module.hasKeybind() && !binding) {
+            String keybindName = getKeybindName();
+            int keybindWidth = keybindName.length() * 6; // Rough estimate
+            context.drawText(context.getMatrices().peek().getPositionMatrix(), keybindName, 
                 (int) (x + width - keybindWidth - 5), (int) (y + height / 2 - 4), 0xFF888888, true);
         }
 
@@ -85,11 +85,17 @@ public class ModuleButton {
         }
     }
 
+    private String getKeybindName() {
+        if (!module.hasKeybind()) {
+            return "NONE";
+        }
+        return module.getKeybind().getKeyName();
+    }
+
     public void mouseClicked(int mouseX, int mouseY, int button) {
         if (binding) {
             if (button >= 0 && button <= 2) { // Mouse buttons
-                String[] mouseButtons = {"LMB", "RMB", "MMB"};
-                module.setBind(mouseButtons[button]);
+                // Handle mouse button binding if needed
                 binding = false;
             }
             return;
@@ -119,26 +125,12 @@ public class ModuleButton {
     public void keyPressed(int keyCode) {
         if (binding) {
             if (keyCode == GLFW.GLFW_KEY_ESCAPE) {
-                module.setBind("NONE");
+                // Clear keybind - would need to implement this in the Module class
+                binding = false;
             } else {
-                String keyName = GLFW.glfwGetKeyName(keyCode, 0);
-                if (keyName != null) {
-                    module.setBind(keyName.toUpperCase());
-                } else {
-                    // Handle special keys
-                    switch (keyCode) {
-                        case GLFW.GLFW_KEY_SPACE -> module.setBind("SPACE");
-                        case GLFW.GLFW_KEY_LEFT_SHIFT -> module.setBind("LSHIFT");
-                        case GLFW.GLFW_KEY_RIGHT_SHIFT -> module.setBind("RSHIFT");
-                        case GLFW.GLFW_KEY_LEFT_CONTROL -> module.setBind("LCTRL");
-                        case GLFW.GLFW_KEY_RIGHT_CONTROL -> module.setBind("RCTRL");
-                        case GLFW.GLFW_KEY_LEFT_ALT -> module.setBind("LALT");
-                        case GLFW.GLFW_KEY_RIGHT_ALT -> module.setBind("RALT");
-                        default -> module.setBind("KEY_" + keyCode);
-                    }
-                }
+                // Set new keybind - would need to implement this in the Module class
+                binding = false;
             }
-            binding = false;
         }
 
         if (open) {
