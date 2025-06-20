@@ -29,6 +29,7 @@ public class CommandManager {
         categories.put("info", new ArrayList<>());
         categories.put("config", new ArrayList<>());
         categories.put("util", new ArrayList<>());
+        categories.put("module", new ArrayList<>());
     }
 
     public void registerCommands() {
