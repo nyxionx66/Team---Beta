@@ -14,15 +14,20 @@ public class MouseMixin {
 
     @Inject(method = "onMouseButton", at = @At("HEAD"), cancellable = true)
     private void onMouseButton(long window, int button, int action, int modifiers, CallbackInfo ci) {
-        // Add null check to prevent crashes during initialization
-        if (Team.getInstance() != null && Team.getInstance().getEventBus() != null) {
-            Mouse mouse = (Mouse) (Object) this;
-            MouseEvent event = new MouseEvent(button, action, modifiers, mouse.getX(), mouse.getY());
-            Team.getInstance().getEventBus().post(event);
+        // Add comprehensive null checks to prevent crashes during initialization
+        try {
+            if (Team.getInstance() != null && Team.getInstance().getEventBus() != null) {
+                Mouse mouse = (Mouse) (Object) this;
+                MouseEvent event = new MouseEvent(button, action, modifiers, mouse.getX(), mouse.getY());
+                Team.getInstance().getEventBus().post(event);
 
-            if (event.isCancelled()) {
-                ci.cancel();
+                if (event.isCancelled()) {
+                    ci.cancel();
+                }
             }
+        } catch (Exception e) {
+            // Log error but don't crash the game
+            Team.LOGGER.error("Error in MouseMixin.onMouseButton", e);
         }
     }
 }
