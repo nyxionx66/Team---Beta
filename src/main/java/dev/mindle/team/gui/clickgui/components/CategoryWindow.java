@@ -65,18 +65,25 @@ public class CategoryWindow {
     }
 
     private void renderHeader(DrawContext context) {
-        // Category header background with improved colors
-        int headerColor = hovered ? 0xFF404040 : 0xFF2D2D2D;
+        // Clean black and white header
+        int headerColor = hovered ? 0xFFFFFFFF : 0xFF000000;
+        int textColor = hovered ? 0xFF000000 : 0xFFFFFFFF;
+        int borderColor = 0xFFFFFFFF;
+        
+        // Header background
         context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), headerColor);
         
-        // Add subtle border
-        context.fill((int) x, (int) (y + height - 1), (int) (x + width), (int) (y + height), 0xFF555555);
+        // Clean white border
+        context.fill((int) x, (int) y, (int) (x + width), (int) y + 1, borderColor); // Top
+        context.fill((int) x, (int) (y + height - 1), (int) (x + width), (int) (y + height), borderColor); // Bottom
+        context.fill((int) x, (int) y, (int) x + 1, (int) (y + height), borderColor); // Left
+        context.fill((int) (x + width - 1), (int) y, (int) (x + width), (int) (y + height), borderColor); // Right
         
-        // Category title with better positioning
+        // Category title with clean typography
         String categoryName = category.getName();
         MinecraftClient mc = MinecraftClient.getInstance();
         int textX = (int) (x + width / 2 - mc.textRenderer.getWidth(categoryName) / 2);
-        context.drawText(mc.textRenderer, categoryName, textX, (int) (y + height / 2 - 4), 0xFFFFFFFF, true);
+        context.drawText(mc.textRenderer, categoryName, textX, (int) (y + height / 2 - 4), textColor, false);
     }
 
     private void renderModules(DrawContext context, int mouseX, int mouseY, float delta) {
