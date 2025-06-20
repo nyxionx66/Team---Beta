@@ -77,6 +77,10 @@ public class Team implements ModInitializer, ClientModInitializer {
     }
 
     public TeamConfig getConfig() {
+        if (config == null) {
+            LOGGER.warn("Config was null, initializing new config instance");
+            config = new TeamConfig();
+        }
         return config;
     }
 
