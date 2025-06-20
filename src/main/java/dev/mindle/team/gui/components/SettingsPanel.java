@@ -224,8 +224,11 @@ public class SettingsPanel extends BasePanel {
             return new NumberSettingComponent((NumberSetting) setting);
         } else if (setting instanceof ModeSetting) {
             return new ModeSettingComponent((ModeSetting) setting);
+        } else if (setting instanceof ColorSetting) {
+            return new ColorSettingComponent((ColorSetting) setting);
+        } else if (setting instanceof KeybindSetting) {
+            return new KeybindSettingComponent((KeybindSetting) setting);
         }
-        // Add more setting types as needed
         
         return null;
     }
