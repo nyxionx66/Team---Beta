@@ -177,23 +177,6 @@ public class DebugCommand extends Command {
                 (used * 100.0) / total);
     }
 
-    @Override
-    public List<String> getSuggestions(String[] args) {
-        List<String> suggestions = new ArrayList<>();
-
-        if (args.length == 1) {
-            String partial = args[0].toLowerCase();
-            for (String option : new String[]{"info", "events", "commands", "system"}) {
-                if (option.startsWith(partial)) {
-                    suggestions.add(option);
-                }
-            }
-        }
-
-        return suggestions;
-    }
-}
-
     private void showModuleInfo() {
         try {
             var moduleManager = Team.getInstance().getModuleManager();
