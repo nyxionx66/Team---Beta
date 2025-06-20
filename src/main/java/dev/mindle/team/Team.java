@@ -37,8 +37,10 @@ public class Team implements ModInitializer, ClientModInitializer {
         LOGGER.info("Initializing {} v{}", MOD_NAME, VERSION);
         
         try {
-            // Initialize core systems
-            this.config = new TeamConfig();
+            // Initialize core systems (config already initialized in constructor)
+            if (this.config == null) {
+                this.config = new TeamConfig();
+            }
             this.eventBus = new EventBus();
             
             LOGGER.info("{} initialized successfully!", MOD_NAME);
