@@ -65,6 +65,11 @@ public class KeybindManager {
 
     @Subscribe
     public void onUpdate(UpdateEvent.Pre event) {
+        // Only process keybinds if no screen is open
+        if (!KeybindUtil.shouldProcessKeybinds()) {
+            return;
+        }
+        
         // Update all keybinds
         for (Keybind keybind : updateList) {
             try {
