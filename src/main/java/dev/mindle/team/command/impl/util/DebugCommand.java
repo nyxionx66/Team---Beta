@@ -52,6 +52,7 @@ public class DebugCommand extends Command {
         ChatUtil.sendMessage("§f" + CommandManager.PREFIX + "debug info §7- General debug information");
         ChatUtil.sendMessage("§f" + CommandManager.PREFIX + "debug events §7- Event system statistics");
         ChatUtil.sendMessage("§f" + CommandManager.PREFIX + "debug commands §7- Command system details");
+        ChatUtil.sendMessage("§f" + CommandManager.PREFIX + "debug modules §7- Module system information");
         ChatUtil.sendMessage("§f" + CommandManager.PREFIX + "debug system §7- System performance info");
     }
 
