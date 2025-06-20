@@ -55,8 +55,8 @@ public class StatusCommand extends Command {
         
         // Module status
         try {
-            var moduleManager = Team.getInstance().getModuleManager();
-            if (moduleManager != null) {
+            if (Team.getInstance() != null && Team.getInstance().getModuleManager() != null) {
+                var moduleManager = Team.getInstance().getModuleManager();
                 ChatUtil.sendMessage("§9Module System:");
                 ChatUtil.sendMessage("§7- Total Modules: §f" + moduleManager.getTotalModules());
                 ChatUtil.sendMessage("§7- Enabled: §a" + moduleManager.getEnabledCount());
