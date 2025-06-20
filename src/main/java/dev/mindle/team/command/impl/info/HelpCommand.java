@@ -27,15 +27,27 @@ public class HelpCommand extends Command {
         ChatUtil.sendMessage("§7Prefix: §f" + CommandManager.PREFIX);
         ChatUtil.sendMessage("§7─────────────────────────");
         
-        // Categorize commands for display
-        showCommandCategory("§9Information Commands:", 
-            Team.getInstance().getCommandManager().getCommandsByCategory("info"));
-        showCommandCategory("§aConfiguration Commands:", 
-            Team.getInstance().getCommandManager().getCommandsByCategory("config"));
-        showCommandCategory("§eUtility Commands:", 
-            Team.getInstance().getCommandManager().getCommandsByCategory("util"));
+        // Auto-fetch all categories and their commands
+        var commandManager = Team.getInstance().getCommandManager();
+        var allCategories = commandManager.getAllCategories();
+        
+        // Display each category with different colors
+        String[] categoryColors = {"§9", "§a", "§e", "§d", "§c", "§6", "§b"};
+        int colorIndex = 0;
+        
+        for (String categoryName : commandManager.getCategoryNames()) {
+            List<Command> commands = commandManager.getCommandsByCategory(categoryName);
+            if (!commands.isEmpty()) {
+                String color = categoryColors[colorIndex % categoryColors.length];
+                String displayName = formatCategoryName(categoryName);
+                showCommandCategory(color + displayName + ":", commands);
+                colorIndex++;
+            }
+        }
         
         ChatUtil.sendMessage("§7─────────────────────────");
+        int totalCommands = commandManager.getTotalCommands();
+        ChatUtil.sendMessage("§7Total: §f" + totalCommands + " §7commands across §f" + allCategories.size() + " §7categories");
         ChatUtil.sendMessage("§7Type §f" + CommandManager.PREFIX + "help [command] §7for detailed help");
     }
 
