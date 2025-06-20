@@ -215,7 +215,25 @@ public abstract class Module {
     }
 
     public boolean hasKeybind() {
-        return keybind != null;
+        return keybind != null && keybind.getKey() != GLFW.GLFW_KEY_UNKNOWN;
+    }
+
+    public void setKeybind(Keybind newKeybind) {
+        this.keybind = newKeybind;
+    }
+
+    public void setKeybindKey(int key) {
+        if (keybind != null) {
+            keybind.setKey(key);
+        } else if (key != GLFW.GLFW_KEY_UNKNOWN) {
+            // Create new keybind if setting a valid key
+            this.keybind = Team.getInstance().getKeybindManager().registerKeybind(
+                name + "_toggle",
+                key,
+                keybindType,
+                this::toggle
+            );
+        }
     }
 
     public String getDisplayName() {
