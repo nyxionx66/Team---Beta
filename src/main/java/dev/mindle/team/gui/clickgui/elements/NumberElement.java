@@ -19,33 +19,37 @@ public class NumberElement extends AbstractElement {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
 
-        // Setting background
-        int bgColor = hovered ? 0xFF2A2A2A : 0xFF1A1A1A;
+        // Setting background with better visual feedback
+        int bgColor = hovered ? 0xFF2F2F2F : 0xFF1F1F1F;
         context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), bgColor);
 
-        // Setting name
+        // Setting name with more bottom margin
         MinecraftClient mc = MinecraftClient.getInstance();
         context.drawText(mc.textRenderer, setting.getName(), 
-            (int) (x + 3), (int) (y + 2), 0xFFCCCCCC, false);
+            (int) (x + 4), (int) (y + 3), 0xFFDDDDDD, false);
 
-        // Slider
-        int sliderX = (int) (x + 3);
-        int sliderY = (int) (y + height - 4);
-        int sliderWidth = (int) (width - 6);
+        // Slider with better positioning and spacing
+        int sliderX = (int) (x + 4);
+        int sliderY = (int) (y + height - 6); // Increased margin from bottom
+        int sliderWidth = (int) (width - 8);
         
-        // Slider background
-        context.fill(sliderX, sliderY, sliderX + sliderWidth, sliderY + 2, 0xFF333333);
+        // Slider track background
+        context.fill(sliderX, sliderY, sliderX + sliderWidth, sliderY + 3, 0xFF404040);
         
-        // Slider handle
+        // Slider filled portion
         double percentage = (setting.getValue() - setting.getMin()) / (setting.getMax() - setting.getMin());
-        int handleX = (int) (sliderX + percentage * sliderWidth);
-        context.fill(handleX - 1, sliderY - 1, handleX + 1, sliderY + 3, 0xFF4CAF50);
+        int filledWidth = (int) (percentage * sliderWidth);
+        context.fill(sliderX, sliderY, sliderX + filledWidth, sliderY + 3, 0xFF4CAF50);
         
-        // Value text
+        // Slider handle with better visibility
+        int handleX = (int) (sliderX + percentage * sliderWidth);
+        context.fill(handleX - 2, sliderY - 2, handleX + 2, sliderY + 5, 0xFFFFFFFF);
+        
+        // Value text with better positioning
         String valueText = String.format("%.1f", setting.getValue());
         int textWidth = mc.textRenderer.getWidth(valueText);
         context.drawText(mc.textRenderer, valueText, 
-            (int) (x + width - textWidth - 3), (int) (y + 2), 0xFFFFFFFF, false);
+            (int) (x + width - textWidth - 4), (int) (y + 3), 0xFFFFFFFF, false);
             
         // Handle dragging
         if (dragging) {
