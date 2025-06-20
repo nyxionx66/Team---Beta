@@ -207,7 +207,7 @@ public class DebugCommand extends Command {
 
         if (args.length == 1) {
             String partial = args[0].toLowerCase();
-            for (String option : new String[]{"info", "events", "commands", "system"}) {
+            for (String option : new String[]{"info", "events", "commands", "modules", "system"}) {
                 if (option.startsWith(partial)) {
                     suggestions.add(option);
                 }
