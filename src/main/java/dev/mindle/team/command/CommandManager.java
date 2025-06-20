@@ -127,42 +127,50 @@ public class CommandManager {
     public List<String> getSuggestions(String input) {
         List<String> suggestions = new ArrayList<>();
         
-        if (!input.startsWith(PREFIX)) {
-            return suggestions;
-        }
+        try {
+            if (!input.startsWith(PREFIX)) {
+                return suggestions;
+            }
 
-        String commandLine = input.substring(PREFIX.length()).toLowerCase();
-        
-        // If no space, suggest command names
-        if (!commandLine.contains(" ")) {
-            for (String commandName : commands.keySet()) {
-                if (commandName.startsWith(commandLine)) {
-                    suggestions.add(PREFIX + commandName);
+            String commandLine = input.substring(PREFIX.length()).toLowerCase();
+            
+            // If no space, suggest command names
+            if (!commandLine.contains(" ")) {
+                for (String commandName : commands.keySet()) {
+                    if (commandName.startsWith(commandLine)) {
+                        suggestions.add(PREFIX + commandName);
+                    }
+                }
+                
+                for (String alias : aliases.keySet()) {
+                    if (alias.startsWith(commandLine)) {
+                        suggestions.add(PREFIX + alias);
+                    }
+                }
+            } else {
+                // Command-specific suggestions
+                String[] parts = commandLine.split("\\s+", 2);
+                String commandName = parts[0];
+                String args = parts.length > 1 ? parts[1] : "";
+                
+                if (aliases.containsKey(commandName)) {
+                    commandName = aliases.get(commandName);
+                }
+                
+                Command command = commands.get(commandName);
+                if (command != null) {
+                    try {
+                        List<String> commandSuggestions = command.getSuggestions(args.split("\\s+"));
+                        for (String suggestion : commandSuggestions) {
+                            suggestions.add(PREFIX + commandName + " " + suggestion);
+                        }
+                    } catch (Exception e) {
+                        Team.LOGGER.debug("Error getting suggestions for command: {}", commandName, e);
+                    }
                 }
             }
-            
-            for (String alias : aliases.keySet()) {
-                if (alias.startsWith(commandLine)) {
-                    suggestions.add(PREFIX + alias);
-                }
-            }
-        } else {
-            // Command-specific suggestions
-            String[] parts = commandLine.split("\\s+", 2);
-            String commandName = parts[0];
-            String args = parts.length > 1 ? parts[1] : "";
-            
-            if (aliases.containsKey(commandName)) {
-                commandName = aliases.get(commandName);
-            }
-            
-            Command command = commands.get(commandName);
-            if (command != null) {
-                List<String> commandSuggestions = command.getSuggestions(args.split("\\s+"));
-                for (String suggestion : commandSuggestions) {
-                    suggestions.add(PREFIX + commandName + " " + suggestion);
-                }
-            }
+        } catch (Exception e) {
+            Team.LOGGER.error("Error generating command suggestions", e);
         }
 
         return suggestions;
