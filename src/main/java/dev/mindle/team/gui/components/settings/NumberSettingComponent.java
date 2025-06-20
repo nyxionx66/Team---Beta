@@ -33,18 +33,18 @@ public class NumberSettingComponent extends BaseSettingComponent<NumberSetting> 
         
         // Render value text
         String valueText = formatValue(value);
-        int textWidth = context.getTextRenderer().getWidth(valueText);
+        int textWidth = RenderUtils.getTextRenderer().getWidth(valueText);
         int textX = controlX + (getControlWidth() - textWidth) / 2;
-        int textY = controlY - context.getTextRenderer().fontHeight - 4;
+        int textY = controlY - RenderUtils.getTextRenderer().fontHeight - 4;
         
         // Background for value text
         int textBgWidth = textWidth + 16;
         int textBgX = textX - 8;
         int textBgY = textY - 4;
-        RenderUtils.drawRoundedRect(context, textBgX, textBgY, textBgWidth, context.getTextRenderer().fontHeight + 8,
+        RenderUtils.drawRoundedRect(context, textBgX, textBgY, textBgWidth, RenderUtils.getTextRenderer().fontHeight + 8,
             ThemeManager.BorderRadius.SMALL, theme.applyAlpha(theme.getSurfaceVariant(), alpha));
         
-        context.drawText(context.getTextRenderer(), valueText, textX, textY, 
+        context.drawText(RenderUtils.getTextRenderer(), valueText, textX, textY, 
             theme.applyAlpha(theme.getTextPrimary(), alpha), false);
     }
     

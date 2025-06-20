@@ -43,7 +43,7 @@ public class ColorSettingComponent extends BaseSettingComponent<ColorSetting> {
         String hexText = setting.getHexString();
         int textColor = getContrastColor(colorValue);
         RenderUtils.drawCenteredText(context, hexText, controlX, 
-            controlY + (ThemeManager.ComponentSize.BUTTON_HEIGHT - context.getTextRenderer().fontHeight) / 2, 
+            controlY + (ThemeManager.ComponentSize.BUTTON_HEIGHT - RenderUtils.getTextRenderer().fontHeight) / 2, 
             getControlWidth(), theme.applyAlpha(textColor, alpha));
         
         // Render color picker if open
@@ -89,7 +89,7 @@ public class ColorSettingComponent extends BaseSettingComponent<ColorSetting> {
         // Hex input
         int hexY = pickerY + PICKER_HEIGHT - 25;
         String hexText = setting.getHexString();
-        context.drawText(context.getTextRenderer(), "Hex: " + hexText, pickerX + ThemeManager.Spacing.SMALL, hexY, 
+        context.drawText(RenderUtils.getTextRenderer(), "Hex: " + hexText, pickerX + ThemeManager.Spacing.SMALL, hexY, 
             theme.applyAlpha(theme.getTextPrimary(), alpha), false);
     }
     

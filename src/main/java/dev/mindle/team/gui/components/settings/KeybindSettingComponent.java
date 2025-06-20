@@ -3,7 +3,6 @@ package dev.mindle.team.gui.components.settings;
 import dev.mindle.team.gui.theme.ThemeManager;
 import dev.mindle.team.gui.utils.RenderUtils;
 import dev.mindle.team.module.setting.KeybindSetting;
-import dev.mindle.team.util.KeybindUtil;
 import net.minecraft.client.gui.DrawContext;
 import org.lwjgl.glfw.GLFW;
 
@@ -49,7 +48,7 @@ public class KeybindSettingComponent extends BaseSettingComponent<KeybindSetting
             RenderUtils.getTextColor(true, controlHovered);
         
         RenderUtils.drawCenteredText(context, buttonText, controlX, 
-            controlY + (ThemeManager.ComponentSize.BUTTON_HEIGHT - context.getTextRenderer().fontHeight) / 2, 
+            controlY + (ThemeManager.ComponentSize.BUTTON_HEIGHT - RenderUtils.getTextRenderer().fontHeight) / 2, 
             getControlWidth(), theme.applyAlpha(textColor, alpha));
     }
     

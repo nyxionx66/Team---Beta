@@ -40,19 +40,19 @@ public class ModeSettingComponent extends BaseSettingComponent<ModeSetting> {
         
         // Current value text
         String currentValue = setting.getValue();
-        String truncatedValue = RenderUtils.truncateText(context.getTextRenderer(), currentValue, 
+        String truncatedValue = RenderUtils.truncateText(RenderUtils.getTextRenderer(), currentValue, 
             getControlWidth() - 20); // Leave space for arrow
         
         int textX = controlX + ThemeManager.Spacing.SMALL;
-        int textY = controlY + (ThemeManager.ComponentSize.BUTTON_HEIGHT - context.getTextRenderer().fontHeight) / 2;
+        int textY = controlY + (ThemeManager.ComponentSize.BUTTON_HEIGHT - RenderUtils.getTextRenderer().fontHeight) / 2;
         
-        context.drawText(context.getTextRenderer(), truncatedValue, textX, textY, 
+        context.drawText(RenderUtils.getTextRenderer(), truncatedValue, textX, textY, 
             theme.applyAlpha(theme.getTextPrimary(), alpha), false);
         
         // Dropdown arrow
         String arrow = dropdownOpen ? "▲" : "▼";
         int arrowX = controlX + getControlWidth() - 16;
-        context.drawText(context.getTextRenderer(), arrow, arrowX, textY, 
+        context.drawText(RenderUtils.getTextRenderer(), arrow, arrowX, textY, 
             theme.applyAlpha(theme.getTextSecondary(), alpha), false);
         
         // Render dropdown if open
@@ -100,12 +100,12 @@ public class ModeSettingComponent extends BaseSettingComponent<ModeSetting> {
                 (itemHovered ? theme.getTextPrimary() : theme.getTextSecondary());
             
             int textX = dropdownX + ThemeManager.Spacing.SMALL;
-            int textY = itemY + (itemHeight - context.getTextRenderer().fontHeight) / 2;
+            int textY = itemY + (itemHeight - RenderUtils.getTextRenderer().fontHeight) / 2;
             
-            String truncatedMode = RenderUtils.truncateText(context.getTextRenderer(), mode, 
+            String truncatedMode = RenderUtils.truncateText(RenderUtils.getTextRenderer(), mode, 
                 dropdownWidth - 2 * ThemeManager.Spacing.SMALL);
             
-            context.drawText(context.getTextRenderer(), truncatedMode, textX, textY, 
+            context.drawText(RenderUtils.getTextRenderer(), truncatedMode, textX, textY, 
                 theme.applyAlpha(textColor, alpha), false);
         }
     }
