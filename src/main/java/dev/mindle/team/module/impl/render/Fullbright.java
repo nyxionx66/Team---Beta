@@ -23,8 +23,8 @@ public class Fullbright extends Module {
 
     @Override
     protected void initializeSettings() {
-        brightness = addSetting(new NumberSetting(getName(), "Brightness", "Brightness level", 15.0, 1.0, 15.0, 0.5));
-        smooth = addSetting(new BooleanSetting(getName(), "Smooth", "Smooth brightness transitions", true));
+        brightness = (NumberSetting) addSetting(new NumberSetting(getName(), "Brightness", "Brightness level", 15.0, 1.0, 15.0, 0.5));
+        smooth = (BooleanSetting) addSetting(new BooleanSetting(getName(), "Smooth", "Smooth brightness transitions", true));
     }
 
     @Override
