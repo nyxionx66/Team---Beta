@@ -22,9 +22,16 @@ public class ToggleCommand extends Command {
     public void execute(String[] args) {
         validateArgs(args, 1);
 
-        // Check if config is available
-        if (Team.getInstance().getConfig() == null) {
-            ChatUtil.sendMessage("§cConfiguration system not yet initialized. Please try again in a moment.");
+        // Check if config is available with better error handling
+        TeamConfig config = null;
+        try {
+            config = Team.getInstance().getConfig();
+        } catch (Exception e) {
+            Team.LOGGER.error("Error accessing config in toggle command", e);
+        }
+        
+        if (config == null) {
+            ChatUtil.sendMessage("§cConfiguration system not available. Please try again in a moment.");
             return;
         }
 
@@ -42,12 +49,18 @@ public class ToggleCommand extends Command {
             return;
         }
 
-        boolean newState = !Team.getInstance().getConfig().getBoolean(feature);
-        Team.getInstance().getConfig().setBoolean(feature, newState);
+        try {
+            boolean currentState = config.getBoolean(feature);
+            boolean newState = !currentState;
+            config.setBoolean(feature, newState);
 
-        String statusColor = newState ? "§a" : "§c";
-        String statusText = newState ? "enabled" : "disabled";
-        ChatUtil.sendMessage("§7" + capitalize(feature) + " " + statusColor + statusText);
+            String statusColor = newState ? "§a" : "§c";
+            String statusText = newState ? "enabled" : "disabled";
+            ChatUtil.sendMessage("§7" + capitalize(feature) + " " + statusColor + statusText);
+        } catch (Exception e) {
+            ChatUtil.sendMessage("§cError toggling feature: §f" + e.getMessage());
+            Team.LOGGER.error("Error toggling feature: " + feature, e);
+        }
     }
 
     private void toggleAll() {
