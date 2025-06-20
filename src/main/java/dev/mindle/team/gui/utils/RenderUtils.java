@@ -1,12 +1,15 @@
 package dev.mindle.team.gui.utils;
 
 import dev.mindle.team.gui.theme.ThemeManager;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.util.math.MathHelper;
 
 public class RenderUtils {
     private static final ThemeManager theme = ThemeManager.getInstance();
+    private static final MinecraftClient mc = MinecraftClient.getInstance();
     
     // Rectangle rendering
     public static void drawRoundedRect(DrawContext context, int x, int y, int width, int height, int radius, int color) {
@@ -68,18 +71,20 @@ public class RenderUtils {
     
     // Text rendering helpers
     public static void drawCenteredText(DrawContext context, String text, int x, int y, int width, int color) {
-        int textWidth = context.getTextRenderer().getWidth(text);
+        TextRenderer textRenderer = mc.textRenderer;
+        int textWidth = textRenderer.getWidth(text);
         int centeredX = x + (width - textWidth) / 2;
-        context.drawText(context.getTextRenderer(), text, centeredX, y, color, false);
+        context.drawText(textRenderer, text, centeredX, y, color, false);
     }
     
     public static void drawRightAlignedText(DrawContext context, String text, int x, int y, int width, int color) {
-        int textWidth = context.getTextRenderer().getWidth(text);
+        TextRenderer textRenderer = mc.textRenderer;
+        int textWidth = textRenderer.getWidth(text);
         int rightAlignedX = x + width - textWidth;
-        context.drawText(context.getTextRenderer(), text, rightAlignedX, y, color, false);
+        context.drawText(textRenderer, text, rightAlignedX, y, color, false);
     }
     
-    public static String truncateText(net.minecraft.client.font.TextRenderer textRenderer, String text, int maxWidth) {
+    public static String truncateText(TextRenderer textRenderer, String text, int maxWidth) {
         if (textRenderer.getWidth(text) <= maxWidth) {
             return text;
         }
@@ -171,7 +176,7 @@ public class RenderUtils {
             int checkSize = size / 2;
             int checkX = x + (size - checkSize) / 2;
             int checkY = y + (size - checkSize) / 2;
-            context.drawText(context.getTextRenderer(), "✓", checkX, checkY, theme.getTextPrimary(), false);
+            context.drawText(mc.textRenderer, "✓", checkX, checkY, theme.getTextPrimary(), false);
         }
     }
     
@@ -184,5 +189,9 @@ public class RenderUtils {
         if (!enabled) return theme.getTextDisabled();
         if (hovered) return theme.getTextPrimary();
         return theme.getTextSecondary();
+    }
+    
+    public static TextRenderer getTextRenderer() {
+        return mc.textRenderer;
     }
 }

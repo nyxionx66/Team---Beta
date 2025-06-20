@@ -40,12 +40,12 @@ public class CategoryPanel extends BasePanel {
     
     @Override
     protected void renderContent(DrawContext context, int mouseX, int mouseY, float delta, float alpha) {
-        int textRenderer = context.getTextRenderer().fontHeight;
+        int textRenderer = RenderUtils.getTextRenderer().fontHeight;
         
         // Render title
         String title = "Categories";
         int titleY = y + ThemeManager.Spacing.PANEL_PADDING;
-        context.drawText(context.getTextRenderer(), title, 
+        context.drawText(RenderUtils.getTextRenderer(), title, 
             x + ThemeManager.Spacing.PANEL_PADDING, titleY, 
             theme.applyAlpha(theme.getTextPrimary(), alpha), false);
         
@@ -96,17 +96,17 @@ public class CategoryPanel extends BasePanel {
         
         int iconX = categoryX + ThemeManager.Spacing.MEDIUM;
         int textX = iconX + 20; // Icon width + spacing
-        int textY = categoryY + (CATEGORY_HEIGHT - context.getTextRenderer().fontHeight) / 2;
+        int textY = categoryY + (CATEGORY_HEIGHT - RenderUtils.getTextRenderer().fontHeight) / 2;
         
         // Icon
         int iconColor = isSelected ? theme.getTextPrimary() : theme.getTextSecondary();
-        context.drawText(context.getTextRenderer(), icon, iconX, textY, 
+        context.drawText(RenderUtils.getTextRenderer(), icon, iconX, textY, 
             theme.applyAlpha(iconColor, alpha), false);
         
         // Text
         int textColor = isSelected ? theme.getTextPrimary() : 
             RenderUtils.getTextColor(true, isHovered);
-        context.drawText(context.getTextRenderer(), name, textX, textY, 
+        context.drawText(RenderUtils.getTextRenderer(), name, textX, textY, 
             theme.applyAlpha(textColor, alpha), false);
         
         // Module count
@@ -143,15 +143,15 @@ public class CategoryPanel extends BasePanel {
         String totalText = "Total: " + totalModules;
         String enabledText = "Enabled: " + enabledModules;
         
-        int lineHeight = context.getTextRenderer().fontHeight + 4;
+        int lineHeight = RenderUtils.getTextRenderer().fontHeight + 4;
         
-        context.drawText(context.getTextRenderer(), statsTitle, statsX, statsY, 
+        context.drawText(RenderUtils.getTextRenderer(), statsTitle, statsX, statsY, 
             theme.applyAlpha(theme.getTextPrimary(), alpha), false);
         
-        context.drawText(context.getTextRenderer(), totalText, statsX, statsY + lineHeight, 
+        context.drawText(RenderUtils.getTextRenderer(), totalText, statsX, statsY + lineHeight, 
             theme.applyAlpha(theme.getTextSecondary(), alpha), false);
         
-        context.drawText(context.getTextRenderer(), enabledText, statsX, statsY + lineHeight * 2, 
+        context.drawText(RenderUtils.getTextRenderer(), enabledText, statsX, statsY + lineHeight * 2, 
             theme.applyAlpha(theme.getSuccess(), alpha), false);
     }
     
