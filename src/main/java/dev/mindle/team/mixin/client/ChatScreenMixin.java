@@ -13,12 +13,21 @@ public class ChatScreenMixin {
 
     @Inject(method = "sendMessage", at = @At("HEAD"), cancellable = true)
     private void onSendMessage(String chatText, boolean addToHistory, CallbackInfo ci) {
-        // Add null check to prevent crashes during initialization
-        if (Team.getInstance() != null && Team.getInstance().getCommandManager() != null) {
-            // Handle command execution
-            if (Team.getInstance().getCommandManager().executeCommand(chatText)) {
-                ci.cancel();
+        // Add comprehensive null checks to prevent crashes during initialization
+        try {
+            if (Team.getInstance() != null && 
+                Team.getInstance().getCommandManager() != null && 
+                chatText != null && 
+                !chatText.isEmpty()) {
+                
+                // Handle command execution
+                if (Team.getInstance().getCommandManager().executeCommand(chatText)) {
+                    ci.cancel();
+                }
             }
+        } catch (Exception e) {
+            // Log error but don't crash the game
+            Team.LOGGER.error("Error in ChatScreenMixin.onSendMessage", e);
         }
     }
 }
