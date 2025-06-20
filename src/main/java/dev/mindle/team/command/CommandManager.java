@@ -46,6 +46,7 @@ public class CommandManager {
         registerCommand(new ToggleCommand(), "util");
         registerCommand(new ReloadCommand(), "util");
         registerCommand(new DebugCommand(), "util");
+        registerCommand(new TestCommand(), "util");
         
         // Module Commands
         registerCommand(new ModuleCommand(), "module");
