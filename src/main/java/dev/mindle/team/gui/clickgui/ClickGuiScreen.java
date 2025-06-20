@@ -59,7 +59,7 @@ public class ClickGuiScreen extends Screen {
                 for (CategoryWindow w : windows) {
                     w.setX((halfWidth - halfWidthCats) + offset);
                     w.setY(20);
-                    offset += ClickGUI.moduleWidth.getValue() + 2;
+                    offset += ClickGUI.moduleWidth.getValue().floatValue() + 2;
                     if (offset > width) {
                         offset = 0;
                     }
