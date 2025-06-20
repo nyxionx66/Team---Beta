@@ -160,8 +160,18 @@ public class ConfigCommand extends Command {
     }
 
     private void resetConfig() {
-        Team.getInstance().getConfig().reset();
-        ChatUtil.sendMessage("§aConfiguration reset to defaults!");
+        try {
+            TeamConfig config = Team.getInstance().getConfig();
+            if (config != null) {
+                config.reset();
+                ChatUtil.sendMessage("§aConfiguration reset to defaults!");
+            } else {
+                ChatUtil.sendMessage("§cConfiguration system not available");
+            }
+        } catch (Exception e) {
+            ChatUtil.sendMessage("§cError resetting configuration: §f" + e.getMessage());
+            Team.LOGGER.error("Error resetting config", e);
+        }
     }
 
     @Override
