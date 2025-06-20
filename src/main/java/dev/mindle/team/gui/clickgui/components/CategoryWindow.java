@@ -80,11 +80,22 @@ public class CategoryWindow {
     }
 
     private void renderModules(DrawContext context, int mouseX, int mouseY, float delta) {
-        float currentY = y + height;
+        float currentY = y + height + 1; // Small gap after header
         
-        // Background for module area
+        // Background for module area with gradient
         float moduleAreaHeight = getModuleAreaHeight();
-        context.fill((int) x, (int) currentY, (int) (x + width), (int) (currentY + moduleAreaHeight), 0xFF1A1A1A);
+        int bgColor1 = 0xFF1A1A1A;
+        int bgColor2 = 0xFF101010;
+        
+        // Create subtle gradient
+        for (int i = 0; i < moduleAreaHeight; i++) {
+            float gradient = (float) i / moduleAreaHeight;
+            int color = interpolateColor(bgColor1, bgColor2, gradient);
+            context.fill((int) x, (int) (currentY + i), (int) (x + width), (int) (currentY + i + 1), color);
+        }
+        
+        // Add border
+        context.fill((int) x, (int) currentY, (int) (x + width), (int) (currentY + 1), 0xFF333333);
         
         for (ModuleButton button : buttons) {
             button.setX(x);
@@ -92,8 +103,26 @@ public class CategoryWindow {
             button.setWidth(width);
             button.setHeight(ClickGUI.moduleHeight.getValue().floatValue());
             button.render(context, mouseX, mouseY, delta);
-            currentY += ClickGUI.moduleHeight.getValue().floatValue() + 1;
+            currentY += ClickGUI.moduleHeight.getValue().floatValue() + 2; // Increased spacing
         }
+    }
+    
+    private int interpolateColor(int color1, int color2, float factor) {
+        factor = Math.max(0, Math.min(1, factor));
+        
+        int r1 = (color1 >> 16) & 0xFF;
+        int g1 = (color1 >> 8) & 0xFF;
+        int b1 = color1 & 0xFF;
+        
+        int r2 = (color2 >> 16) & 0xFF;
+        int g2 = (color2 >> 8) & 0xFF;
+        int b2 = color2 & 0xFF;
+        
+        int r = (int) (r1 + (r2 - r1) * factor);
+        int g = (int) (g1 + (g2 - g1) * factor);
+        int b = (int) (b1 + (b2 - b1) * factor);
+        
+        return 0xFF000000 | (r << 16) | (g << 8) | b;
     }
 
     public void mouseClicked(int mouseX, int mouseY, int button) {
