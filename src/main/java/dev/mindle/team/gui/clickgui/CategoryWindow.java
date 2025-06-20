@@ -4,6 +4,7 @@ import dev.mindle.team.module.Module;
 import dev.mindle.team.module.ModuleCategory;
 import dev.mindle.team.module.impl.client.ClickGUI;
 import dev.mindle.team.util.RenderUtil;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 
 import java.util.ArrayList;
@@ -53,9 +54,9 @@ public class CategoryWindow {
         
         // Category title
         String categoryName = category.getName();
-        int textX = (int) (x + width / 2 - context.getMatrices().peek().getPositionMatrix().m00() * categoryName.length() * 3);
-        context.drawCenteredTextWithShadow(context.getMatrices().peek().getPositionMatrix(), 
-            categoryName, (int) (x + width / 2), (int) (y + height / 2 - 4), 0xFFFFFFFF);
+        MinecraftClient mc = MinecraftClient.getInstance();
+        int textX = (int) (x + width / 2 - mc.textRenderer.getWidth(categoryName) / 2);
+        context.drawText(mc.textRenderer, categoryName, textX, (int) (y + height / 2 - 4), 0xFFFFFFFF, true);
 
         // Module buttons (if open)
         if (open) {
