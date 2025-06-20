@@ -127,7 +127,7 @@ public class ModuleButton {
         
         // Add binding indicator
         if (binding) {
-            int flashColor = (System.currentTimeMillis() / 200) % 2 == 0 ? 0xFF FFD700 : finalColor;
+            int flashColor = (System.currentTimeMillis() / 200) % 2 == 0 ? 0xFFFFD700 : finalColor;
             context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), flashColor);
         }
     }
