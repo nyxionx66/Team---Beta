@@ -106,11 +106,12 @@ public class StatusCommand extends Command {
         try {
             if (Team.getInstance() != null && Team.getInstance().getModuleManager() != null) {
                 var keybindManager = Team.getInstance().getModuleManager().getKeybindManager();
-            if (keybindManager != null) {
-                ChatUtil.sendMessage("§7Keybind Statistics:");
-                ChatUtil.sendMessage("§7- Total Keybinds: §f" + keybindManager.getTotalKeybinds());
-                ChatUtil.sendMessage("§7- Toggle Keybinds: §f" + keybindManager.getKeybindCount(dev.mindle.team.module.keybind.KeybindType.TOGGLE));
-                ChatUtil.sendMessage("§7- Hold Keybinds: §f" + keybindManager.getKeybindCount(dev.mindle.team.module.keybind.KeybindType.HOLD));
+                if (keybindManager != null) {
+                    ChatUtil.sendMessage("§7Keybind Statistics:");
+                    ChatUtil.sendMessage("§7- Total Keybinds: §f" + keybindManager.getTotalKeybinds());
+                    ChatUtil.sendMessage("§7- Toggle Keybinds: §f" + keybindManager.getKeybindCount(dev.mindle.team.module.keybind.KeybindType.TOGGLE));
+                    ChatUtil.sendMessage("§7- Hold Keybinds: §f" + keybindManager.getKeybindCount(dev.mindle.team.module.keybind.KeybindType.HOLD));
+                }
             }
         } catch (Exception e) {
             ChatUtil.sendMessage("§7Keybind Manager: §cError accessing");
