@@ -5,7 +5,6 @@ import dev.mindle.team.gui.theme.ThemeManager;
 import dev.mindle.team.gui.utils.AnimationUtils;
 import dev.mindle.team.gui.utils.RenderUtils;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.widget.TextFieldWidget;
 import org.lwjgl.glfw.GLFW;
 
 public class HeaderPanel extends BasePanel {
@@ -13,7 +12,6 @@ public class HeaderPanel extends BasePanel {
     private static final int BUTTON_HEIGHT = 32;
     private static final int SEARCH_WIDTH = 200;
     
-    private TextFieldWidget searchField;
     private final AnimationUtils.HoverAnimation gridViewAnimation = new AnimationUtils.HoverAnimation();
     private final AnimationUtils.HoverAnimation listViewAnimation = new AnimationUtils.HoverAnimation();
     private final AnimationUtils.HoverAnimation settingsAnimation = new AnimationUtils.HoverAnimation();
@@ -28,10 +26,7 @@ public class HeaderPanel extends BasePanel {
     
     @Override
     public void init() {
-        // Create search field
-        if (searchField != null) {
-            searchField.setTextColor(theme.getTextPrimary());
-        }
+        // Initialize header components
     }
     
     @Override
@@ -68,9 +63,9 @@ public class HeaderPanel extends BasePanel {
     private void renderTitle(DrawContext context, float alpha) {
         String title = "ClickGUI";
         int titleX = x + ThemeManager.Spacing.PANEL_PADDING;
-        int titleY = y + (height - context.getTextRenderer().fontHeight) / 2;
+        int titleY = y + (height - RenderUtils.getTextRenderer().fontHeight) / 2;
         
-        context.drawText(context.getTextRenderer(), title, titleX, titleY, 
+        context.drawText(RenderUtils.getTextRenderer(), title, titleX, titleY, 
             theme.applyAlpha(theme.getTextPrimary(), alpha), false);
     }
     
@@ -91,8 +86,8 @@ public class HeaderPanel extends BasePanel {
         // Search icon
         String searchIcon = "🔍";
         int iconX = searchX + ThemeManager.Spacing.MEDIUM;
-        int iconY = searchY + (ThemeManager.ComponentSize.INPUT_HEIGHT - context.getTextRenderer().fontHeight) / 2;
-        context.drawText(context.getTextRenderer(), searchIcon, iconX, iconY, 
+        int iconY = searchY + (ThemeManager.ComponentSize.INPUT_HEIGHT - RenderUtils.getTextRenderer().fontHeight) / 2;
+        context.drawText(RenderUtils.getTextRenderer(), searchIcon, iconX, iconY, 
             theme.applyAlpha(theme.getTextSecondary(), alpha), false);
         
         // Search text
@@ -100,10 +95,10 @@ public class HeaderPanel extends BasePanel {
         if (searchText.isEmpty()) {
             searchText = "Search modules...";
             int placeholderColor = theme.applyAlpha(theme.getTextDisabled(), alpha);
-            context.drawText(context.getTextRenderer(), searchText, iconX + 20, iconY, placeholderColor, false);
+            context.drawText(RenderUtils.getTextRenderer(), searchText, iconX + 20, iconY, placeholderColor, false);
         } else {
             int textColor = theme.applyAlpha(theme.getTextPrimary(), alpha);
-            context.drawText(context.getTextRenderer(), searchText, iconX + 20, iconY, textColor, false);
+            context.drawText(RenderUtils.getTextRenderer(), searchText, iconX + 20, iconY, textColor, false);
         }
     }
     
@@ -125,7 +120,7 @@ public class HeaderPanel extends BasePanel {
         String gridText = "Grid";
         int gridTextColor = isGridView ? theme.getTextPrimary() : RenderUtils.getTextColor(true, gridViewHovered);
         RenderUtils.drawCenteredText(context, gridText, gridX, 
-            controlsY + (BUTTON_HEIGHT - context.getTextRenderer().fontHeight) / 2, 
+            controlsY + (BUTTON_HEIGHT - RenderUtils.getTextRenderer().fontHeight) / 2, 
             BUTTON_WIDTH, theme.applyAlpha(gridTextColor, alpha));
         
         // List view button
@@ -142,7 +137,7 @@ public class HeaderPanel extends BasePanel {
         String listText = "List";
         int listTextColor = isListView ? theme.getTextPrimary() : RenderUtils.getTextColor(true, listViewHovered);
         RenderUtils.drawCenteredText(context, listText, listX, 
-            controlsY + (BUTTON_HEIGHT - context.getTextRenderer().fontHeight) / 2, 
+            controlsY + (BUTTON_HEIGHT - RenderUtils.getTextRenderer().fontHeight) / 2, 
             BUTTON_WIDTH, theme.applyAlpha(listTextColor, alpha));
     }
     
@@ -160,7 +155,7 @@ public class HeaderPanel extends BasePanel {
         String settingsText = "⚙ Settings";
         int settingsTextColor = RenderUtils.getTextColor(true, settingsHovered);
         RenderUtils.drawCenteredText(context, settingsText, buttonX, 
-            buttonY + (BUTTON_HEIGHT - context.getTextRenderer().fontHeight) / 2, 
+            buttonY + (BUTTON_HEIGHT - RenderUtils.getTextRenderer().fontHeight) / 2, 
             BUTTON_WIDTH, theme.applyAlpha(settingsTextColor, alpha));
     }
     

@@ -164,14 +164,14 @@ public class ModulePanel extends BasePanel {
         // Module name
         String name = module.getName();
         int nameColor = isEnabled ? theme.getSuccess() : theme.getTextPrimary();
-        context.drawText(context.getTextRenderer(), name, contentX, contentY, 
+        context.drawText(RenderUtils.getTextRenderer(), name, contentX, contentY, 
             theme.applyAlpha(nameColor, alpha), false);
         
         // Module description
         String description = module.getDescription();
-        String truncatedDesc = RenderUtils.truncateText(context.getTextRenderer(), description, contentWidth);
-        int descY = contentY + context.getTextRenderer().fontHeight + 4;
-        context.drawText(context.getTextRenderer(), truncatedDesc, contentX, descY, 
+        String truncatedDesc = RenderUtils.truncateText(RenderUtils.getTextRenderer(), description, contentWidth);
+        int descY = contentY + RenderUtils.getTextRenderer().fontHeight + 4;
+        context.drawText(RenderUtils.getTextRenderer(), truncatedDesc, contentX, descY, 
             theme.applyAlpha(theme.getTextSecondary(), alpha), false);
         
         // Status indicator
@@ -186,7 +186,7 @@ public class ModulePanel extends BasePanel {
         // Keybind display
         if (module.hasKeybind()) {
             String keybindText = module.getKeybind().getKeyName();
-            int keybindY = scaledY + scaledHeight - context.getTextRenderer().fontHeight - ThemeManager.Spacing.SMALL;
+            int keybindY = scaledY + scaledHeight - RenderUtils.getTextRenderer().fontHeight - ThemeManager.Spacing.SMALL;
             RenderUtils.drawRightAlignedText(context, keybindText, contentX, keybindY, contentWidth, 
                 theme.applyAlpha(theme.getTextDisabled(), alpha));
         }
@@ -220,19 +220,19 @@ public class ModulePanel extends BasePanel {
         
         // Content
         int contentX = itemX + ThemeManager.Spacing.MEDIUM;
-        int contentY = itemY + (itemHeight - context.getTextRenderer().fontHeight) / 2;
+        int contentY = itemY + (itemHeight - RenderUtils.getTextRenderer().fontHeight) / 2;
         
         // Module name
         String name = module.getName();
         int nameColor = isEnabled ? theme.getSuccess() : theme.getTextPrimary();
-        context.drawText(context.getTextRenderer(), name, contentX, contentY, 
+        context.drawText(RenderUtils.getTextRenderer(), name, contentX, contentY, 
             theme.applyAlpha(nameColor, alpha), false);
         
         // Module description
         String description = module.getDescription();
-        String truncatedDesc = RenderUtils.truncateText(context.getTextRenderer(), description, 
+        String truncatedDesc = RenderUtils.truncateText(RenderUtils.getTextRenderer(), description, 
             itemWidth - 200); // Leave space for toggle and keybind
-        context.drawText(context.getTextRenderer(), truncatedDesc, contentX + 120, contentY, 
+        context.drawText(RenderUtils.getTextRenderer(), truncatedDesc, contentX + 120, contentY, 
             theme.applyAlpha(theme.getTextSecondary(), alpha), false);
         
         // Toggle switch
@@ -250,7 +250,7 @@ public class ModulePanel extends BasePanel {
         if (module.hasKeybind()) {
             String keybindText = module.getKeybind().getKeyName();
             int keybindX = toggleX - 60;
-            context.drawText(context.getTextRenderer(), keybindText, keybindX, contentY, 
+            context.drawText(RenderUtils.getTextRenderer(), keybindText, keybindX, contentY, 
                 theme.applyAlpha(theme.getTextDisabled(), alpha), false);
         }
     }
@@ -260,11 +260,11 @@ public class ModulePanel extends BasePanel {
             "No modules in this category" : 
             "No modules found for '" + parent.getSearchQuery() + "'";
         
-        int textWidth = context.getTextRenderer().getWidth(emptyText);
+        int textWidth = RenderUtils.getTextRenderer().getWidth(emptyText);
         int textX = x + (width - textWidth) / 2;
         int textY = y + height / 2;
         
-        context.drawText(context.getTextRenderer(), emptyText, textX, textY, 
+        context.drawText(RenderUtils.getTextRenderer(), emptyText, textX, textY, 
             theme.applyAlpha(theme.getTextDisabled(), alpha), false);
     }
     
