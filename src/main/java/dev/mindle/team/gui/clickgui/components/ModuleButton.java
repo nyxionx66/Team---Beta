@@ -103,32 +103,39 @@ public class ModuleButton {
     }
 
     private void renderButton(DrawContext context) {
-        // Base colors - more vibrant and distinguishable
-        int baseDisabled = 0xFF1E1E1E;  // Darker base for disabled
-        int baseEnabled = 0xFF2E7D32;   // Green tint for enabled
-        int hoverDisabled = 0xFF2A2A2A;  // Lighter hover for disabled
-        int hoverEnabled = 0xFF4CAF50;   // Brighter green for enabled hover
+        // Clean black and white design
+        int bgColor = 0xFF000000; // Black background
+        int borderColor = 0xFFFFFFFF; // White border
+        int hoverBgColor = 0xFF333333; // Dark gray for hover
+        int enabledBgColor = 0xFFFFFFFF; // White for enabled
+        int enabledTextColor = 0xFF000000; // Black text on white
         
-        // Interpolate colors based on animations
-        int finalColor;
+        // Determine colors based on state
+        int finalBgColor = bgColor;
         if (module.isEnabled()) {
-            finalColor = interpolateColor(baseEnabled, hoverEnabled, hoverAnimation);
-        } else {
-            finalColor = interpolateColor(baseDisabled, hoverDisabled, hoverAnimation);
+            finalBgColor = enabledBgColor;
+        } else if (hovered) {
+            finalBgColor = hoverBgColor;
         }
         
-        // Add subtle border effect for enabled modules
-        if (module.isEnabled()) {
-            int borderColor = interpolateColor(0xFF1B5E20, 0xFF2E7D32, enableAnimation);
-            context.fill((int) x - 1, (int) y - 1, (int) (x + width + 1), (int) (y + height + 1), borderColor);
-        }
+        // Main button background
+        context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), finalBgColor);
         
-        context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), finalColor);
+        // Clean borders
+        context.fill((int) x, (int) y, (int) (x + width), (int) y + 1, borderColor); // Top
+        context.fill((int) x, (int) (y + height - 1), (int) (x + width), (int) (y + height), borderColor); // Bottom
+        context.fill((int) x, (int) y, (int) x + 1, (int) (y + height), borderColor); // Left
+        context.fill((int) (x + width - 1), (int) y, (int) (x + width), (int) (y + height), borderColor); // Right
         
-        // Add binding indicator
+        // Add binding indicator with minimal design
         if (binding) {
-            int flashColor = (System.currentTimeMillis() / 200) % 2 == 0 ? 0xFFFFD700 : finalColor;
-            context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), flashColor);
+            // Simple flashing border
+            if ((System.currentTimeMillis() / 300) % 2 == 0) {
+                context.fill((int) x + 1, (int) y + 1, (int) (x + width - 1), (int) y + 2, 0xFFFFFFFF);
+                context.fill((int) x + 1, (int) (y + height - 2), (int) (x + width - 1), (int) (y + height - 1), 0xFFFFFFFF);
+                context.fill((int) x + 1, (int) y + 1, (int) x + 2, (int) (y + height - 1), 0xFFFFFFFF);
+                context.fill((int) (x + width - 2), (int) y + 1, (int) (x + width - 1), (int) (y + height - 1), 0xFFFFFFFF);
+            }
         }
     }
     
