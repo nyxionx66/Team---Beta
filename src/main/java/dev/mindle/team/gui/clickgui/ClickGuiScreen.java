@@ -34,7 +34,7 @@ public class ClickGuiScreen extends Screen {
             int windowHeight = 18;
 
             int halfWidth = width / 2;
-            int halfWidthCats = (int) ((((float) ModuleCategory.values().length - 1) / 2f) * (ClickGUI.moduleWidth.getValue() + 4f));
+            int halfWidthCats = (int) ((((float) ModuleCategory.values().length - 1) / 2f) * (ClickGUI.moduleWidth.getValue().floatValue() + 4f));
 
             for (ModuleCategory category : ModuleCategory.values()) {
                 List<Module> modules = Team.getInstance().getModuleManager().getModulesByCategory(category);
