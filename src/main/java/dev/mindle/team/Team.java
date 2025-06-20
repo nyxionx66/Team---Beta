@@ -62,4 +62,8 @@ public class Team implements ModInitializer, ClientModInitializer {
     public TeamConfig getConfig() {
         return config;
     }
+
+    public void setConfig(TeamConfig config) {
+        this.config = config;
+    }
 }
