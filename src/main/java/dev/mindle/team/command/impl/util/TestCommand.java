@@ -5,7 +5,9 @@ import java.util.List;
 
 import dev.mindle.team.command.Command;
 import dev.mindle.team.command.CommandManager;
+import dev.mindle.team.screen.ScreenManager;
 import dev.mindle.team.util.ChatUtil;
+import dev.mindle.team.util.KeybindUtil;
 
 public class TestCommand extends Command {
     public TestCommand() {
