@@ -9,6 +9,7 @@ import dev.mindle.team.event.EventBus;
 import dev.mindle.team.command.CommandManager;
 import dev.mindle.team.config.TeamConfig;
 import dev.mindle.team.module.ModuleManager;
+import dev.mindle.team.module.keybind.KeybindManager;
 
 public class Team implements ModInitializer, ClientModInitializer {
     public static final String MOD_ID = "team";
