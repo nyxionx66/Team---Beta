@@ -59,6 +59,9 @@ public class Team implements ModInitializer, ClientModInitializer {
         LOGGER.info("Initializing {} client-side features", MOD_NAME);
         
         try {
+            // Initialize keybind manager first
+            this.keybindManager = new KeybindManager();
+            
             // Initialize client-side systems
             this.commandManager = new CommandManager();
             this.commandManager.registerCommands();
