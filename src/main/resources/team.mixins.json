@@ -9,7 +9,7 @@
 		"input.MouseMixin",
 		"client.MinecraftClientMixin",
 		"                "client.ChatScreenMixin",
-                "client.ScreenMixin""
+                "client.ScreenMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
