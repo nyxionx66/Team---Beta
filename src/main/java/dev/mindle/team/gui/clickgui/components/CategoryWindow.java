@@ -65,11 +65,14 @@ public class CategoryWindow {
     }
 
     private void renderHeader(DrawContext context) {
-        // Category header background
-        int headerColor = hovered ? 0xFF3D3D3D : 0xFF2D2D2D;
+        // Category header background with improved colors
+        int headerColor = hovered ? 0xFF404040 : 0xFF2D2D2D;
         context.fill((int) x, (int) y, (int) (x + width), (int) (y + height), headerColor);
         
-        // Category title
+        // Add subtle border
+        context.fill((int) x, (int) (y + height - 1), (int) (x + width), (int) (y + height), 0xFF555555);
+        
+        // Category title with better positioning
         String categoryName = category.getName();
         MinecraftClient mc = MinecraftClient.getInstance();
         int textX = (int) (x + width / 2 - mc.textRenderer.getWidth(categoryName) / 2);
