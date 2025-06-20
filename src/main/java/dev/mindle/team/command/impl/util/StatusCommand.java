@@ -56,12 +56,12 @@ public class StatusCommand extends Command {
         // Module status
         try {
             if (Team.getInstance() != null && Team.getInstance().getModuleManager() != null) {
-                Object moduleManager = Team.getInstance().getModuleManager();
+                dev.mindle.team.module.ModuleManager moduleManager = Team.getInstance().getModuleManager();
                 if (moduleManager != null) {
                     ChatUtil.sendMessage("§9Module System:");
-                    ChatUtil.sendMessage("§7- Total Modules: §f" + ((dev.mindle.team.module.ModuleManager)moduleManager).getTotalModules());
-                    ChatUtil.sendMessage("§7- Enabled: §a" + ((dev.mindle.team.module.ModuleManager)moduleManager).getEnabledCount());
-                    ChatUtil.sendMessage("§7- Keybinds: §f" + ((dev.mindle.team.module.ModuleManager)moduleManager).getKeybindManager().getTotalKeybinds());
+                    ChatUtil.sendMessage("§7- Total Modules: §f" + moduleManager.getTotalModules());
+                    ChatUtil.sendMessage("§7- Enabled: §a" + moduleManager.getEnabledCount());
+                    ChatUtil.sendMessage("§7- Keybinds: §f" + moduleManager.getKeybindManager().getTotalKeybinds());
                 }
             }
         } catch (Exception e) {
