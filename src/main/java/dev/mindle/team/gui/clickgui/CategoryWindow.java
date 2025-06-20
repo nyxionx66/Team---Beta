@@ -70,9 +70,9 @@ public class CategoryWindow {
                 button.setX(x);
                 button.setY(currentY);
                 button.setWidth(width);
-                button.setHeight(ClickGUI.moduleHeight.getValue().intValue());
+                button.setHeight(ClickGUI.moduleHeight.getValue().floatValue());
                 button.render(context, mouseX, mouseY, delta);
-                currentY += ClickGUI.moduleHeight.getValue() + 1;
+                currentY += ClickGUI.moduleHeight.getValue().floatValue() + 1;
             }
         }
     }
