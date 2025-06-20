@@ -91,8 +91,15 @@ public class TeamConfig {
 
     public boolean getBoolean(String key) {
         Object value = config.get(key);
+        if (value == null) {
+            // Return default value if key doesn't exist
+            return false;
+        }
         if (value instanceof Boolean) {
             return (Boolean) value;
+        }
+        if (value instanceof String) {
+            return Boolean.parseBoolean((String) value);
         }
         return Boolean.parseBoolean(value.toString());
     }
