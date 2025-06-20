@@ -99,6 +99,15 @@ public class ModuleManager {
         Team.LOGGER.debug("Registered {} misc modules", getModulesByCategory(ModuleCategory.MISC).size());
     }
 
+    private void registerClientModules() {
+        try {
+            registerModule(new dev.mindle.team.module.impl.client.ClickGUI());
+        } catch (Exception e) {
+            Team.LOGGER.error("Error registering client modules", e);
+        }
+        Team.LOGGER.debug("Registered {} client modules", getModulesByCategory(ModuleCategory.CLIENT).size());
+    }
+
     public void registerModule(Module module) {
         if (module == null) {
             Team.LOGGER.warn("Attempted to register null module");
