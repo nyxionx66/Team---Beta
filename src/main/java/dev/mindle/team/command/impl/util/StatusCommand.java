@@ -104,7 +104,8 @@ public class StatusCommand extends Command {
         ChatUtil.sendMessage("§7- Pause Menu Open: " + (KeybindUtil.isPauseMenuOpen() ? "§cYes" : "§aNo"));
         
         try {
-            var keybindManager = Team.getInstance().getModuleManager().getKeybindManager();
+            if (Team.getInstance() != null && Team.getInstance().getModuleManager() != null) {
+                var keybindManager = Team.getInstance().getModuleManager().getKeybindManager();
             if (keybindManager != null) {
                 ChatUtil.sendMessage("§7Keybind Statistics:");
                 ChatUtil.sendMessage("§7- Total Keybinds: §f" + keybindManager.getTotalKeybinds());
