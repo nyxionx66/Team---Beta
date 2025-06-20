@@ -24,18 +24,34 @@ public class InfoCommand extends Command {
         ChatUtil.sendMessage("");
         ChatUtil.sendMessage("§aMod Statistics:");
 
-        // Add null checks
-        int commandCount = Team.getInstance().getCommandManager() != null ?
-                Team.getInstance().getCommandManager().getCommands().size() : 0;
-        ChatUtil.sendMessage("§7Commands: §f" + commandCount);
+        // Add comprehensive null checks
+        try {
+            CommandManager commandManager = Team.getInstance().getCommandManager();
+            int commandCount = (commandManager != null && commandManager.getCommands() != null) ?
+                    commandManager.getCommands().size() : 0;
+            ChatUtil.sendMessage("§7Commands: §f" + commandCount);
+        } catch (Exception e) {
+            ChatUtil.sendMessage("§7Commands: §cError accessing");
+            Team.LOGGER.debug("Error accessing command manager in info", e);
+        }
 
-        int listenerCount = Team.getInstance().getEventBus() != null ?
-                Team.getInstance().getEventBus().getListenerCount() : 0;
-        ChatUtil.sendMessage("§7Event Listeners: §f" + listenerCount);
+        try {
+            EventBus eventBus = Team.getInstance().getEventBus();
+            int listenerCount = (eventBus != null) ? eventBus.getListenerCount() : 0;
+            ChatUtil.sendMessage("§7Event Listeners: §f" + listenerCount);
+        } catch (Exception e) {
+            ChatUtil.sendMessage("§7Event Listeners: §cError accessing");
+            Team.LOGGER.debug("Error accessing event bus in info", e);
+        }
 
-        int configKeys = Team.getInstance().getConfig() != null ?
-                Team.getInstance().getConfig().getKeys().size() : 0;
-        ChatUtil.sendMessage("§7Config Keys: §f" + configKeys);
+        try {
+            TeamConfig config = Team.getInstance().getConfig();
+            int configKeys = (config != null && config.getKeys() != null) ? config.getKeys().size() : 0;
+            ChatUtil.sendMessage("§7Config Keys: §f" + configKeys);
+        } catch (Exception e) {
+            ChatUtil.sendMessage("§7Config Keys: §cError accessing");
+            Team.LOGGER.debug("Error accessing config in info", e);
+        }
 
         ChatUtil.sendMessage("§8§l▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬");
     }
