@@ -1,0 +1,150 @@
+package dev.mindle.team.command.impl.config;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import dev.mindle.team.Team;
+import dev.mindle.team.command.Command;
+import dev.mindle.team.command.CommandManager;
+import dev.mindle.team.util.ChatUtil;
+
+public class ConfigCommand extends Command {
+    public ConfigCommand() {
+        super("config", "Manage mod configuration", CommandManager.PREFIX + "config <get|set|list|reset> [key] [value]", "cfg", "settings");
+    }
+
+    @Override
+    public void execute(String[] args) {
+        validateArgs(args, 1);
+
+        // Check if config is available
+        if (Team.getInstance().getConfig() == null) {
+            ChatUtil.sendMessage("§cConfiguration system not yet initialized. Please try again in a moment.");
+            return;
+        }
+
+        String action = args[0].toLowerCase();
+
+        switch (action) {
+            case "list":
+                listConfig();
+                break;
+            case "get":
+                validateArgs(args, 2);
+                getConfig(args[1]);
+                break;
+            case "set":
+                validateArgs(args, 3);
+                setConfig(args[1], args[2]);
+                break;
+            case "reset":
+                resetConfig();
+                break;
+            default:
+                ChatUtil.sendMessage("§cInvalid action: §f" + action);
+                ChatUtil.sendMessage("§7Usage: §f" + getUsage());
+        }
+    }
+
+    private void listConfig() {
+        ChatUtil.sendMessage("§b" + Team.MOD_NAME + " Configuration:");
+        ChatUtil.sendMessage("§7─────────────────────────");
+
+        // Categorize config for better display
+        showConfigCategory("§9General Settings:", "hud", "debug", "notifications");
+        showConfigCategory("§aCommand Settings:", "autocomplete", "commandPrefix", "maxChatHistory");
+        showConfigCategory("§eRender Settings:", "renderDistance", "showCoordinates", "showFPS");
+
+        ChatUtil.sendMessage("§7─────────────────────────");
+        ChatUtil.sendMessage("§7Use §f" + CommandManager.PREFIX + "config get/set <key> §7to modify");
+    }
+
+    private void showConfigCategory(String categoryName, String... keys) {
+        ChatUtil.sendMessage(categoryName);
+        for (String key : keys) {
+            Object value = Team.getInstance().getConfig().get(key);
+            if (value != null) {
+                String valueStr = formatConfigValue(value);
+                ChatUtil.sendMessage("  §f" + key + " §7= " + valueStr);
+            }
+        }
+    }
+
+    private String formatConfigValue(Object value) {
+        if (value instanceof Boolean) {
+            return (Boolean) value ? "§atrue" : "§cfalse";
+        } else if (value instanceof Number) {
+            return "§e" + value;
+        } else {
+            return "§f" + value;
+        }
+    }
+
+    private void getConfig(String key) {
+        Object value = Team.getInstance().getConfig().get(key);
+        if (value != null) {
+            ChatUtil.sendMessage("§f" + key + " §7= " + formatConfigValue(value));
+        } else {
+            ChatUtil.sendMessage("§cConfiguration key not found: §f" + key);
+        }
+    }
+
+    private void setConfig(String key, String value) {
+        try {
+            // Try to parse as different types
+            if (value.equalsIgnoreCase("true") || value.equalsIgnoreCase("false")) {
+                Team.getInstance().getConfig().setBoolean(key, Boolean.parseBoolean(value));
+            } else if (value.matches("-?\\d+")) {
+                Team.getInstance().getConfig().setInt(key, Integer.parseInt(value));
+            } else if (value.matches("-?\\d*\\.\\d+")) {
+                Team.getInstance().getConfig().setDouble(key, Double.parseDouble(value));
+            } else {
+                Team.getInstance().getConfig().setString(key, value);
+            }
+
+            ChatUtil.sendMessage("§7Set §f" + key + " §7to " + formatConfigValue(Team.getInstance().getConfig().get(key)));
+        } catch (NumberFormatException e) {
+            ChatUtil.sendMessage("§cInvalid value format for: §f" + key);
+        }
+    }
+
+    private void resetConfig() {
+        Team.getInstance().getConfig().reset();
+        ChatUtil.sendMessage("§aConfiguration reset to defaults!");
+    }
+
+    @Override
+    public List<String> getSuggestions(String[] args) {
+        List<String> suggestions = new ArrayList<>();
+
+        if (args.length == 1) {
+            String partial = args[0].toLowerCase();
+            for (String action : new String[]{"list", "get", "set", "reset"}) {
+                if (action.startsWith(partial)) {
+                    suggestions.add(action);
+                }
+            }
+        } else if (args.length == 2 && (args[0].equalsIgnoreCase("get") || args[0].equalsIgnoreCase("set"))) {
+            if (Team.getInstance().getConfig() != null) {
+                String partial = args[1].toLowerCase();
+                for (String key : Team.getInstance().getConfig().getKeys()) {
+                    if (key.toLowerCase().startsWith(partial)) {
+                        suggestions.add(key);
+                    }
+                }
+            }
+        } else if (args.length == 3 && args[0].equalsIgnoreCase("set")) {
+            // Suggest values based on key type
+            if (Team.getInstance().getConfig() != null) {
+                String key = args[1];
+                Object currentValue = Team.getInstance().getConfig().get(key);
+                if (currentValue instanceof Boolean) {
+                    suggestions.add("true");
+                    suggestions.add("false");
+                }
+            }
+        }
+
+        return suggestions;
+    }
+}

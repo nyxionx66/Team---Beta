@@ -17,6 +17,9 @@
 	"entrypoints": {
 		"main": [
 			"dev.mindle.team.Team"
+		],
+		"client": [
+			"dev.mindle.team.Team"
 		]
 	},
 	"mixins": [

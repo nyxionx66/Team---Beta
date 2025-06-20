@@ -4,6 +4,12 @@
 	"compatibilityLevel": "JAVA_21",
 	"mixins": [
 	],
+	"client": [
+		"input.KeyboardMixin",
+		"input.MouseMixin",
+		"client.MinecraftClientMixin",
+		"client.ChatScreenMixin"
+	],
 	"injectors": {
 		"defaultRequire": 1
 	}
