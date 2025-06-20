@@ -192,40 +192,38 @@ public class ModuleButton {
     private void renderSettingsElements(DrawContext context, int mouseX, int mouseY, float delta) {
         if (openAnimation <= 0.01f) return; // Don't render if barely open
         
-        float currentY = y + height;
+        float currentY = y + height + 1; // Small gap
         
         // Calculate animated height
-        float maxSettingsHeight = elements.size() * 17; // Increased spacing
+        float maxSettingsHeight = elements.size() * 16 + 4; // Clean spacing
         float settingsHeight = maxSettingsHeight * openAnimation;
         
-        // Background for settings area with gradient
-        int bgColor1 = 0xFF121212;
-        int bgColor2 = 0xFF0A0A0A;
+        // Clean black background with white border
+        context.fill((int) x, (int) currentY, (int) (x + width), (int) (currentY + settingsHeight), 0xFF000000);
         
-        // Create gradient effect
-        for (int i = 0; i < settingsHeight; i++) {
-            float gradient = (float) i / settingsHeight;
-            int color = interpolateColor(bgColor1, bgColor2, gradient);
-            context.fill((int) x, (int) (currentY + i), (int) (x + width), (int) (currentY + i + 1), color);
-        }
+        // Borders for settings area
+        context.fill((int) x, (int) currentY, (int) (x + width), (int) currentY + 1, 0xFFFFFFFF); // Top
+        context.fill((int) x, (int) (currentY + settingsHeight - 1), (int) (x + width), (int) (currentY + settingsHeight), 0xFFFFFFFF); // Bottom
+        context.fill((int) x, (int) currentY, (int) x + 1, (int) (currentY + settingsHeight), 0xFFFFFFFF); // Left
+        context.fill((int) (x + width - 1), (int) currentY, (int) (x + width), (int) (currentY + settingsHeight), 0xFFFFFFFF); // Right
         
-        // Render elements with smooth animation
+        // Render elements with clean spacing
         float elementY = currentY + 2; // Top padding
         for (int i = 0; i < elements.size(); i++) {
-            if (elementY > currentY + settingsHeight) break; // Don't render outside animated area
+            if (elementY > currentY + settingsHeight - 14) break; // Don't render outside animated area
             
             AbstractElement element = elements.get(i);
-            element.setX(x + 4); // Increased left padding
+            element.setX(x + 2); // Clean padding
             element.setY(elementY);
-            element.setWidth(width - 8); // Increased horizontal padding
-            element.setHeight(13);
+            element.setWidth(width - 4); // Clean padding
+            element.setHeight(14); // Standard height
             
             // Only render if fully visible in animated area
-            if (elementY + 13 <= currentY + settingsHeight) {
+            if (elementY + 14 <= currentY + settingsHeight) {
                 element.render(context, mouseX, mouseY, delta);
             }
             
-            elementY += 17; // Increased vertical spacing
+            elementY += 16; // Clean spacing
         }
     }
 
