@@ -107,6 +107,14 @@ public class Team implements ModInitializer, ClientModInitializer {
         return config;
     }
 
+    public ModuleManager getModuleManager() {
+        if (moduleManager == null) {
+            LOGGER.warn("ModuleManager was null, initializing new instance");
+            moduleManager = new ModuleManager();
+        }
+        return moduleManager;
+    }
+
     public void setConfig(TeamConfig config) {
         this.config = config;
     }
