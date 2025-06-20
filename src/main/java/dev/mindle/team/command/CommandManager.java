@@ -12,6 +12,7 @@ import dev.mindle.team.command.impl.info.*;
 import dev.mindle.team.command.impl.config.*;
 import dev.mindle.team.command.impl.util.*;
 import dev.mindle.team.command.impl.module.*;
+import dev.mindle.team.command.impl.gui.*;
 import dev.mindle.team.util.ChatUtil;
 
 public class CommandManager {
