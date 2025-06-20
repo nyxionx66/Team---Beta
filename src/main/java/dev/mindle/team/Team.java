@@ -61,6 +61,9 @@ public class Team implements ModInitializer, ClientModInitializer {
             this.commandManager = new CommandManager();
             this.commandManager.registerCommands();
             
+            // Initialize module system
+            this.moduleManager = new ModuleManager();
+            
             LOGGER.info("{} client initialization complete!", MOD_NAME);
         } catch (Exception e) {
             LOGGER.error("Failed to initialize {} client features", MOD_NAME, e);
