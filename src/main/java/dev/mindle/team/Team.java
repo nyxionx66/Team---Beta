@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import dev.mindle.team.event.EventBus;
 import dev.mindle.team.command.CommandManager;
 import dev.mindle.team.config.TeamConfig;
+import dev.mindle.team.module.ModuleManager;
 
 public class Team implements ModInitializer, ClientModInitializer {
     public static final String MOD_ID = "team";
