@@ -23,6 +23,7 @@ public class Team implements ModInitializer, ClientModInitializer {
     private EventBus eventBus;
     private TeamConfig config;
     private ModuleManager moduleManager;
+    private ClickGUIManager guiManager;
 
     public Team() {
         instance = this;
