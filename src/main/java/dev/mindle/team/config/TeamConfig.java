@@ -106,18 +106,34 @@ public class TeamConfig {
 
     public int getInt(String key) {
         Object value = config.get(key);
+        if (value == null) {
+            return 0;
+        }
         if (value instanceof Number) {
             return ((Number) value).intValue();
         }
-        return Integer.parseInt(value.toString());
+        try {
+            return Integer.parseInt(value.toString());
+        } catch (NumberFormatException e) {
+            Team.LOGGER.warn("Invalid integer value for key '{}': {}", key, value);
+            return 0;
+        }
     }
 
     public double getDouble(String key) {
         Object value = config.get(key);
+        if (value == null) {
+            return 0.0;
+        }
         if (value instanceof Number) {
             return ((Number) value).doubleValue();
         }
-        return Double.parseDouble(value.toString());
+        try {
+            return Double.parseDouble(value.toString());
+        } catch (NumberFormatException e) {
+            Team.LOGGER.warn("Invalid double value for key '{}': {}", key, value);
+            return 0.0;
+        }
     }
 
     public void setString(String key, String value) {
