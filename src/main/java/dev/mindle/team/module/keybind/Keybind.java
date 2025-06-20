@@ -34,9 +34,8 @@ public class Keybind {
         this.lastPressed = this.pressed;
         this.pressed = KeybindUtil.isKeyPressed(key);
 
-        // Check if any screen is open - if so, don't process keybinds
-        MinecraftClient mc = MinecraftClient.getInstance();
-        if (mc.currentScreen != null) {
+        // Check if we should process keybinds (no screen open)
+        if (!KeybindUtil.shouldProcessKeybinds()) {
             // Reset pressed state to prevent actions when screen closes
             this.pressed = false;
             return;
