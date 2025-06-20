@@ -193,3 +193,26 @@ public class DebugCommand extends Command {
         return suggestions;
     }
 }
+
+    private void showModuleInfo() {
+        try {
+            var moduleManager = Team.getInstance().getModuleManager();
+            if (moduleManager != null) {
+                ChatUtil.sendMessage("§dModule System Details:");
+                ChatUtil.sendMessage("§7Total Modules: §f" + moduleManager.getTotalModules());
+                ChatUtil.sendMessage("§7Enabled: §a" + moduleManager.getEnabledCount() + " §7| Disabled: §c" + moduleManager.getDisabledCount());
+                ChatUtil.sendMessage("§7Keybinds: §f" + moduleManager.getKeybindManager().getTotalKeybinds());
+
+                ChatUtil.sendMessage("§7Category Breakdown:");
+                var stats = moduleManager.getCategoryStatistics();
+                for (var entry : stats.entrySet()) {
+                    int enabled = moduleManager.getEnabledCategoryCount(entry.getKey());
+                    ChatUtil.sendMessage("  " + entry.getKey().getDisplayName() + ": §f" + enabled + "/" + entry.getValue());
+                }
+            } else {
+                ChatUtil.sendMessage("§7Module system not available");
+            }
+        } catch (Exception e) {
+            Team.LOGGER.error("Error accessing module manager in debug info", e);
+            ChatUtil.sendMessage("§7Error accessing module system");
+        }
