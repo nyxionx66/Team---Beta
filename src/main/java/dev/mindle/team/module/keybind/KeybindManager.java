@@ -67,6 +67,15 @@ public class KeybindManager {
     public void onUpdate(UpdateEvent.Pre event) {
         // Only process keybinds if no screen is open
         if (!KeybindUtil.shouldProcessKeybinds()) {
+            // Optional: Log when keybinds are blocked (only in debug mode)
+            if (Team.getInstance() != null && 
+                Team.getInstance().getConfig() != null && 
+                Team.getInstance().getConfig().getBoolean("debug")) {
+                // Only log occasionally to avoid spam
+                if (System.currentTimeMillis() % 1000 < 50) { // Log roughly once per second
+                    Team.LOGGER.debug("Keybinds blocked - Screen open: {}", KeybindUtil.getCurrentScreenType());
+                }
+            }
             return;
         }
         
