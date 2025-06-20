@@ -31,6 +31,22 @@ public class KeybindUtil {
         return mc.player != null && mc.world != null && !ScreenManager.isScreenOpen();
     }
 
+    public static boolean isChatOpen() {
+        return ScreenManager.isChatOpen();
+    }
+
+    public static boolean isInventoryOpen() {
+        return ScreenManager.isInventoryOpen();
+    }
+
+    public static boolean isPauseMenuOpen() {
+        return ScreenManager.isPauseMenuOpen();
+    }
+
+    public static String getCurrentScreenType() {
+        return ScreenManager.getScreenType();
+    }
+
     public static boolean isCtrlPressed() {
         return isKeyPressed(GLFW.GLFW_KEY_LEFT_CONTROL) || isKeyPressed(GLFW.GLFW_KEY_RIGHT_CONTROL);
     }
