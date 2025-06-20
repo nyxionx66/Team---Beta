@@ -47,6 +47,10 @@ public class CommandManager {
         registerCommand(new ReloadCommand(), "util");
         registerCommand(new DebugCommand(), "util");
         
+        // Module Commands
+        registerCommand(new ModuleCommand(), "module");
+        registerCommand(new KeybindCommand(), "module");
+        
         Team.LOGGER.info("Registered {} commands across {} categories", 
             commands.size(), categories.size());
         
