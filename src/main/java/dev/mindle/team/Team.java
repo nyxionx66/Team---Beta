@@ -45,11 +45,16 @@ public class Team implements ModInitializer, ClientModInitializer {
     public void onInitializeClient() {
         LOGGER.info("Initializing {} client-side features", MOD_NAME);
         
-        // Initialize client-side systems
-        this.commandManager = new CommandManager();
-        this.commandManager.registerCommands();
-        
-        LOGGER.info("{} client initialization complete!", MOD_NAME);
+        try {
+            // Initialize client-side systems
+            this.commandManager = new CommandManager();
+            this.commandManager.registerCommands();
+            
+            LOGGER.info("{} client initialization complete!", MOD_NAME);
+        } catch (Exception e) {
+            LOGGER.error("Failed to initialize {} client features", MOD_NAME, e);
+            throw new RuntimeException("Failed to initialize " + MOD_NAME + " client features", e);
+        }
     }
 
     public static Team getInstance() {
