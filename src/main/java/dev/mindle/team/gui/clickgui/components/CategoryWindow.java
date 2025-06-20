@@ -87,30 +87,29 @@ public class CategoryWindow {
     }
 
     private void renderModules(DrawContext context, int mouseX, int mouseY, float delta) {
-        float currentY = y + height + 1; // Small gap after header
+        float currentY = y + height + 2; // Small gap after header
         
-        // Background for module area with gradient
+        // Clean module area background
         float moduleAreaHeight = getModuleAreaHeight();
-        int bgColor1 = 0xFF1A1A1A;
-        int bgColor2 = 0xFF101010;
         
-        // Create subtle gradient
-        for (int i = 0; i < moduleAreaHeight; i++) {
-            float gradient = (float) i / moduleAreaHeight;
-            int color = interpolateColor(bgColor1, bgColor2, gradient);
-            context.fill((int) x, (int) (currentY + i), (int) (x + width), (int) (currentY + i + 1), color);
-        }
+        // Black background with white border
+        context.fill((int) x, (int) currentY, (int) (x + width), (int) (currentY + moduleAreaHeight), 0xFF000000);
         
-        // Add border
-        context.fill((int) x, (int) currentY, (int) (x + width), (int) (currentY + 1), 0xFF333333);
+        // Clean borders
+        context.fill((int) x, (int) currentY, (int) (x + width), (int) currentY + 1, 0xFFFFFFFF); // Top
+        context.fill((int) x, (int) (currentY + moduleAreaHeight - 1), (int) (x + width), (int) (currentY + moduleAreaHeight), 0xFFFFFFFF); // Bottom
+        context.fill((int) x, (int) currentY, (int) x + 1, (int) (currentY + moduleAreaHeight), 0xFFFFFFFF); // Left
+        context.fill((int) (x + width - 1), (int) currentY, (int) (x + width), (int) (currentY + moduleAreaHeight), 0xFFFFFFFF); // Right
+        
+        currentY += 2; // Top padding
         
         for (ModuleButton button : buttons) {
-            button.setX(x);
+            button.setX(x + 2); // Left padding
             button.setY(currentY);
-            button.setWidth(width);
+            button.setWidth(width - 4); // Padding on both sides
             button.setHeight(ClickGUI.moduleHeight.getValue().floatValue());
             button.render(context, mouseX, mouseY, delta);
-            currentY += ClickGUI.moduleHeight.getValue().floatValue() + 2; // Increased spacing
+            currentY += ClickGUI.moduleHeight.getValue().floatValue() + 2; // Clean spacing
         }
     }
     
