@@ -48,22 +48,39 @@ public class ModuleManager {
     }
 
     private void registerCombatModules() {
-        // Will be populated with combat modules
+        try {
+            registerModule(new dev.mindle.team.module.impl.combat.KillAura());
+        } catch (Exception e) {
+            Team.LOGGER.error("Error registering combat modules", e);
+        }
         Team.LOGGER.debug("Registered {} combat modules", getModulesByCategory(ModuleCategory.COMBAT).size());
     }
 
     private void registerMovementModules() {
-        // Will be populated with movement modules
+        try {
+            registerModule(new dev.mindle.team.module.impl.movement.Speed());
+            registerModule(new dev.mindle.team.module.impl.movement.Fly());
+        } catch (Exception e) {
+            Team.LOGGER.error("Error registering movement modules", e);
+        }
         Team.LOGGER.debug("Registered {} movement modules", getModulesByCategory(ModuleCategory.MOVEMENT).size());
     }
 
     private void registerRenderModules() {
-        // Will be populated with render modules
+        try {
+            registerModule(new dev.mindle.team.module.impl.render.Fullbright());
+        } catch (Exception e) {
+            Team.LOGGER.error("Error registering render modules", e);
+        }
         Team.LOGGER.debug("Registered {} render modules", getModulesByCategory(ModuleCategory.RENDER).size());
     }
 
     private void registerPlayerModules() {
-        // Will be populated with player modules
+        try {
+            registerModule(new dev.mindle.team.module.impl.player.AutoSprint());
+        } catch (Exception e) {
+            Team.LOGGER.error("Error registering player modules", e);
+        }
         Team.LOGGER.debug("Registered {} player modules", getModulesByCategory(ModuleCategory.PLAYER).size());
     }
 
@@ -73,7 +90,11 @@ public class ModuleManager {
     }
 
     private void registerMiscModules() {
-        // Will be populated with misc modules
+        try {
+            registerModule(new dev.mindle.team.module.impl.misc.AutoClicker());
+        } catch (Exception e) {
+            Team.LOGGER.error("Error registering misc modules", e);
+        }
         Team.LOGGER.debug("Registered {} misc modules", getModulesByCategory(ModuleCategory.MISC).size());
     }
 
