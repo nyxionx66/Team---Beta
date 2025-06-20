@@ -92,23 +92,30 @@ public class ClickGuiScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         anyHovered = false;
         
-        // Dark background
-        context.fill(0, 0, width, height, 0x80000000);
+        // Clean black background
+        context.fill(0, 0, width, height, 0xFF000000);
 
         windows.forEach(w -> w.render(context, mouseX, mouseY, delta));
 
-        // Show description tooltip
+        // Show description tooltip with minimal black and white design
         if (!currentDescription.isEmpty() && ClickGUI.descriptions.getValue()) {
-            int descWidth = textRenderer.getWidth(currentDescription) + 6;
-            context.fill(mouseX + 7, mouseY + 5, mouseX + 7 + descWidth, mouseY + 16, 0xFF2D2D2D);
-            context.drawText(textRenderer, currentDescription, mouseX + 10, mouseY + 8, 0xFFFFFFFF, true);
+            int descWidth = textRenderer.getWidth(currentDescription) + 12;
+            int descHeight = 14;
+            // Black background with white border
+            context.fill(mouseX + 8, mouseY + 6, mouseX + 8 + descWidth, mouseY + 6 + descHeight, 0xFF000000);
+            context.fill(mouseX + 7, mouseY + 5, mouseX + 9 + descWidth, mouseY + 7, 0xFFFFFFFF); // Top border
+            context.fill(mouseX + 7, mouseY + 5 + descHeight, mouseX + 9 + descWidth, mouseY + 7 + descHeight, 0xFFFFFFFF); // Bottom border
+            context.fill(mouseX + 7, mouseY + 5, mouseX + 8, mouseY + 7 + descHeight, 0xFFFFFFFF); // Left border
+            context.fill(mouseX + 8 + descWidth, mouseY + 5, mouseX + 9 + descWidth, mouseY + 7 + descHeight, 0xFFFFFFFF); // Right border
+            
+            context.drawText(textRenderer, currentDescription, mouseX + 12, mouseY + 9, 0xFFFFFFFF, false);
             currentDescription = "";
         }
 
-        // Show tips
+        // Show tips with minimal design
         if (ClickGUI.tips.getValue()) {
-            String tipText = "Left Click: Toggle Module | Right Click: Settings | Middle Click: Bind";
-            context.drawText(textRenderer, tipText, 5, height - 15, 0xFFAAAAAA, true);
+            String tipText = "Left Click: Toggle | Right Click: Settings | Middle Click: Bind";
+            context.drawText(textRenderer, tipText, 8, height - 18, 0xFFAAAAAA, false);
         }
     }
 
