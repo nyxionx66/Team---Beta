@@ -79,14 +79,25 @@ public class DebugCommand extends Command {
 
     private void showEventInfo() {
         ChatUtil.sendMessage("§9Event System Statistics:");
-        ChatUtil.sendMessage("§7Active Listeners: §f" + Team.getInstance().getEventBus().getListenerCount());
-        ChatUtil.sendMessage("§7Total Handlers: §f" + Team.getInstance().getEventBus().getHandlerCount());
-        ChatUtil.sendMessage("§7Event Types: §f" + Team.getInstance().getEventBus().getEventTypeCount());
+        
+        try {
+            EventBus eventBus = Team.getInstance().getEventBus();
+            if (eventBus != null) {
+                ChatUtil.sendMessage("§7Active Listeners: §f" + eventBus.getListenerCount());
+                ChatUtil.sendMessage("§7Total Handlers: §f" + eventBus.getHandlerCount());
+                ChatUtil.sendMessage("§7Event Types: §f" + eventBus.getEventTypeCount());
 
-        ChatUtil.sendMessage("§7Handler Distribution:");
-        Map<String, Integer> stats = Team.getInstance().getEventBus().getEventStatistics();
-        for (Map.Entry<String, Integer> entry : stats.entrySet()) {
-            ChatUtil.sendMessage("  §f" + entry.getKey() + ": §7" + entry.getValue() + " handlers");
+                ChatUtil.sendMessage("§7Handler Distribution:");
+                Map<String, Integer> stats = eventBus.getEventStatistics();
+                for (Map.Entry<String, Integer> entry : stats.entrySet()) {
+                    ChatUtil.sendMessage("  §f" + entry.getKey() + ": §7" + entry.getValue() + " handlers");
+                }
+            } else {
+                ChatUtil.sendMessage("§7Event system not available");
+            }
+        } catch (Exception e) {
+            Team.LOGGER.error("Error accessing event bus in debug info", e);
+            ChatUtil.sendMessage("§7Error accessing event system");
         }
     }
 
