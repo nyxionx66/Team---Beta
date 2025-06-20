@@ -7,6 +7,8 @@ import java.util.Map;
 import dev.mindle.team.Team;
 import dev.mindle.team.command.Command;
 import dev.mindle.team.command.CommandManager;
+import dev.mindle.team.config.TeamConfig;
+import dev.mindle.team.event.EventBus;
 import dev.mindle.team.util.ChatUtil;
 import net.minecraft.client.MinecraftClient;
 

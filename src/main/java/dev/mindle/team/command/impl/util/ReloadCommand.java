@@ -3,6 +3,8 @@ package dev.mindle.team.command.impl.util;
 import dev.mindle.team.Team;
 import dev.mindle.team.command.Command;
 import dev.mindle.team.command.CommandManager;
+import dev.mindle.team.config.TeamConfig;
+import dev.mindle.team.event.EventBus;
 import dev.mindle.team.util.ChatUtil;
 
 public class ReloadCommand extends Command {

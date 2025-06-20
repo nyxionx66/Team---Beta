@@ -7,6 +7,7 @@ import java.util.List;
 import dev.mindle.team.Team;
 import dev.mindle.team.command.Command;
 import dev.mindle.team.command.CommandManager;
+import dev.mindle.team.config.TeamConfig;
 import dev.mindle.team.util.ChatUtil;
 
 public class ToggleCommand extends Command {
